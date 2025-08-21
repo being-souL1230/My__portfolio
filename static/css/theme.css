@@ -1,0 +1,22 @@
+:root {
+    --primary-color: #4fc3f7;
+    --primary-color-light: #263445;
+    --primary-color-dark: #1976d2;
+    --secondary-color: #e3eaf7;
+    --background: #181f2a;
+    --glass-bg: rgba(36, 45, 62, 0.45);
+    --glass-blur: 18px;
+    --card-radius: 18px;
+    --card-shadow: 0 6px 32px rgba(0,0,0,0.22);
+    --highlight-bg: rgba(79,195,247,0.10);
+    --highlight-border: 3px solid var(--primary-color);
+    --skill-tag-bg: rgba(79,195,247,0.13);
+    --skill-tag-color: var(--primary-color);
+    --navbar-bg: rgba(24,31,42,0.85);
+    --navbar-blur: 18px;
+    --navbar-height: 44px;
+    --font-main: 'Segoe UI', Arial, sans-serif;
+    --transition: 0.2s;
+    --section-padding: 2rem;
+    --section-padding-mobile: 1rem;
+} 
