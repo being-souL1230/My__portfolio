@@ -169,8 +169,7 @@ starlette==0.47.2
 sympy==1.14.0
 tensorboard==2.20.0
 tensorboard-data-server==0.7.0
-tensorflow==2.20.0  # Latest version compatible with Python 3.10
-tensorflow-io-gcs-filesystem==0.31.0
+tensorflow[gcs-filesystem]==2.20.0  # Latest version compatible with Python 3.10, includes gcs-filesystem
 termcolor==2.3.0
 # tf_keras removed - using keras from tensorflow 2.20.0
 threadpoolctl==3.6.0
