@@ -208,13 +208,49 @@
         });
       }
 
-      // Loading shimmer effect
-      setTimeout(() => {
-        elements.shimmer.style.opacity = '0';
-        setTimeout(() => {
-          elements.shimmer.style.display = 'none';
-        }, 300);
-      }, 1000);
+      // Video hover functionality for profile circle
+      const profileVideo = document.querySelector('.profile-circle video');
+      if (profileVideo) {
+        // Pause video initially
+        profileVideo.pause();
+
+        let hoverTimeout;
+        let playTimeout;
+
+        // Play video on hover with slight delay
+        const profileCircle = document.querySelector('.profile-circle');
+        profileCircle.addEventListener('mouseenter', () => {
+          // Clear any existing timeouts
+          clearTimeout(hoverTimeout);
+          clearTimeout(playTimeout);
+
+          // Reset video to beginning
+          profileVideo.currentTime = 0;
+
+          // Add slight delay to prevent accidental triggers
+          hoverTimeout = setTimeout(() => {
+            profileVideo.play().catch(e => {
+              console.log('Video autoplay blocked:', e);
+            });
+
+            // Stop video after 4 seconds
+            playTimeout = setTimeout(() => {
+              profileVideo.pause();
+              profileVideo.currentTime = 0; // Reset to beginning
+            }, 4000); // 4 seconds
+          }, 100); // 100ms delay
+        });
+
+        // Pause video when not hovering
+        profileCircle.addEventListener('mouseleave', () => {
+          // Clear timeouts to prevent delayed play/stop
+          clearTimeout(hoverTimeout);
+          clearTimeout(playTimeout);
+
+          profileVideo.pause();
+          profileVideo.currentTime = 0; // Reset to beginning
+        });
+      }
 
       // Contact modal
       document.querySelectorAll('.contact-trigger').forEach(btn => {
@@ -358,6 +394,14 @@
           }, 150 * index);
         });
       }
+
+      // Loading shimmer effect
+      setTimeout(() => {
+        elements.shimmer.style.opacity = '0';
+        setTimeout(() => {
+          elements.shimmer.style.display = 'none';
+        }, 300);
+      }, 1000);
 
       // Keyboard events
       document.addEventListener('keydown', (e) => {

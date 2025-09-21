@@ -222,12 +222,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow:
         0 0 60px rgba(59, 130, 246, 0.3),
         inset 0 0 60px rgba(59, 130, 246, 0.1);
       flex-shrink: 0;
       margin-top: 12px;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .profile-circle::before {
@@ -245,7 +249,7 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: 
+      background:
         radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
       pointer-events: none;
@@ -257,22 +261,35 @@
     }
 
     .profile-circle:hover {
-      transform: scale(1.05) rotate(2deg);
-      box-shadow: 
+      transform: scale(1.05) rotate(2deg) translateZ(0);
+      box-shadow:
         0 0 80px rgba(59, 130, 246, 0.5),
         inset 0 0 80px rgba(59, 130, 246, 0.2);
     }
 
-    .profile-circle img {
+    .profile-circle video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       border-radius: 50%;
+      cursor: pointer;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
-    .profile-circle:hover img {
-      transform: scale(1.08);
+    .profile-circle video::-webkit-media-controls {
+      display: none !important;
+    }
+
+    .profile-circle video::-webkit-media-controls-panel {
+      display: none !important;
+    }
+
+    .profile-circle:hover video {
+      transform: scale(1.08) translateZ(0);
     }
 
     #home h1 {
