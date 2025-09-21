@@ -183,11 +183,50 @@
 
     .page-header {
       text-align: center;
-      margin: var(--space-sm) auto var(--space-xs) auto;
-      max-width: 700px;
+      margin: var(--space-sm) auto var(--space-xl) auto;
+      max-width: 900px;
       padding: 0 var(--space-sm);
       box-sizing: border-box;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+      position: relative;
+    }
+
+    .header-content {
+      text-align: center;
+      width: 100%;
+    }
+
+    .header-project-btn {
+      position: absolute;
+      top: var(--space-xs);
+      right: var(--space-sm);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(30, 41, 59, 0.95) 100%);
+      color: var(--primary-light);
+      border: 1.5px solid rgba(59, 130, 246, 0.25);
+      border-radius: 50px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(59, 130, 246, 0.10), 0 1.5px 8px rgba(0, 0, 0, 0.18);
+      padding: 10px 18px;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      min-width: 44px;
+      z-index: 10;
+    }
+
+    .header-project-btn:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.22) 0%, rgba(30, 41, 59, 0.95) 100%);
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.18), 0 2px 8px var(--darkest);
+      transform: translateY(-2px) scale(1.02);
     }
 
     .form-title {
@@ -233,7 +272,7 @@
       border-radius: var(--radius-lg) var(--radius-2xl) var(--radius-2xl) var(--radius-lg);
       border: 1.5px solid var(--card-border);
       box-shadow: var(--shadow-soft);
-      padding: var(--space-lg) var(--space-md) var(--space-md) var(--space-md);
+      padding: var(--space-md) var(--space-sm) var(--space-sm) var(--space-sm);
       width: 100%;
       max-width: 480px;
       box-sizing: border-box;
@@ -244,13 +283,14 @@
       transition: all var(--transition-slow), box-shadow var(--transition-normal), border-color var(--transition-normal);
     }
 
-    /* Form Section Specific */
+    /* Form Section Specific - Wider for Side by Side Cards */
     .form-section {
-      max-width: 800px;
+      max-width: 1000px;
       border-radius: var(--radius-xl) var(--space-2xl) var(--space-2xl) var(--radius-xl);
       margin: var(--space-xl) auto 0 auto;
       width: 100%;
       box-sizing: border-box;
+      padding: var(--space-2xl) var(--space-lg) var(--space-lg) var(--space-lg);
     }
 
     /* Result Section Specific */
@@ -297,7 +337,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-sm);
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-md);
     }
 
     .form-card-header .icon {
@@ -321,20 +361,89 @@
       width: 100%;
     }
 
-    /* Form Grid Layout */
-    .form-grid {
+    /* Input Cards Container - Side by Side Layout */
+    .input-cards-container {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-md);
+      justify-content: space-between;
+    }
+
+    /* Input Card Styles - Equal Width for Side by Side */
+    .input-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg) var(--space-lg);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      backdrop-filter: blur(12px) saturate(1.1) brightness(1.02);
+      -webkit-backdrop-filter: blur(12px) saturate(1.1) brightness(1.02);
+      transition: all var(--transition-slow);
+      flex: 1;
+      min-width: 0; /* Allow cards to shrink */
+    }
+
+    .input-card:hover {
+      transform: translateY(-2px) scale(1.008);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--card-highlight);
+    }
+
+    .input-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      background: var(--gradient-glow);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+      opacity: 0.6;
+      filter: blur(1px);
+    }
+
+    /* Card Headers */
+    .input-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .input-card-header .icon {
+      font-size: 1.2em;
+      color: var(--primary-light);
+      filter: drop-shadow(0 1px 6px rgba(59, 130, 246, 0.2));
+    }
+
+    .input-card-header .title {
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      color: var(--primary-light);
+      text-shadow: 0 1px 4px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Card Grid Layout - Single Column for Vertical Arrangement */
+    .input-card-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-md) var(--space-md);
+      grid-template-columns: 1fr;
+      gap: var(--space-sm) var(--space-md);
       margin-bottom: var(--space-lg);
     }
 
     /* Form Groups */
     .form-group {
       display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-md);
       position: relative;
+      margin-bottom: var(--space-sm);
     }
 
     .form-group:focus-within label {
@@ -349,6 +458,8 @@
       font-size: var(--font-size-base);
       text-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
       transition: color var(--transition-normal);
+      min-width: 120px;
+      flex-shrink: 0;
     }
     /* ========================================
        INPUT & BUTTON STYLES
@@ -366,6 +477,9 @@
       transition: all var(--transition-slow);
       box-shadow: var(--input-shadow);
       position: relative;
+      width: 100px;
+      max-width: 120px;
+      flex-shrink: 0;
     }
 
     input[type="number"]:hover, select:hover {
@@ -391,8 +505,8 @@
     .predict-row {
       display: flex;
       align-items: center;
-      gap: var(--space-md);
-      margin-top: var(--space-md);
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
     }
 
     /* Primary Predict Button */
@@ -443,7 +557,7 @@
     /* Example Buttons Container */
     .example-btns {
       display: flex;
-      gap: var(--space-sm);
+      gap: var(--space-xs);
       flex-wrap: wrap;
     }
 
@@ -479,11 +593,11 @@
       display: flex;
       align-items: center;
       gap: var(--space-sm);
-      padding: var(--space-md) var(--space-lg);
+      padding: var(--space-sm) var(--space-md);
       border-radius: var(--radius-lg);
       font-weight: 800;
       font-size: var(--font-size-lg);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
       justify-content: center;
       position: relative;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
@@ -556,7 +670,7 @@
                   rgba(255, 255, 255, 0.1) 0%, 
                   rgba(255, 255, 255, 0.05) 100%);
       border-radius: var(--radius-full);
-      margin: var(--space-sm) 0 var(--space-xs) 0;
+      margin: var(--space-xs) 0 var(--space-xs) 0;
       overflow: hidden;
       box-shadow: 
         inset 0 3px 6px rgba(0, 0, 0, 0.3), 
@@ -639,10 +753,10 @@
     .probabilities {
       display: flex;
       justify-content: space-between;
-      margin-top: var(--space-sm);
+      margin-top: var(--space-xs);
       font-size: var(--font-size-base);
       font-weight: 700;
-      padding: var(--space-sm) var(--space-md);
+      padding: var(--space-xs) var(--space-sm);
       background: linear-gradient(135deg, 
                   rgba(255, 255, 255, 0.08) 0%, 
                   rgba(59, 130, 246, 0.05) 100%);
@@ -679,7 +793,7 @@
     /* Loading State */
     .loading {
       text-align: center;
-      margin-top: var(--space-xl);
+      margin-top: var(--space-md);
       color: var(--primary-light);
       font-size: var(--font-size-xl);
       text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
@@ -711,7 +825,7 @@
     .analysis-title {
       color: var(--primary-light);
       font-weight: 800;
-      margin: var(--space-md) 0 var(--space-sm) 0;
+      margin: var(--space-sm) 0 var(--space-xs) 0;
       font-size: var(--font-size-base);
       display: flex;
       align-items: center;
@@ -734,7 +848,7 @@
     }
 
     .analysis-list {
-      margin: var(--space-sm) 0 0 0;
+      margin: var(--space-xs) 0 0 0;
       padding-left: var(--space-md);
       color: var(--gray-light);
       font-size: var(--font-size-sm);
@@ -962,7 +1076,18 @@
         border-radius: var(--radius-lg);
       }
 
-      .form-grid {
+      /* Switch cards to vertical on tablet */
+      .input-cards-container {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .input-card {
+        flex: none;
+        min-width: auto;
+      }
+
+      .input-card-grid {
         grid-template-columns: 1fr;
         gap: var(--space-md);
       }
@@ -987,11 +1112,8 @@
         gap: var(--space-md);
       }
 
-      .form-section {
-        padding: var(--space-md) var(--space-sm) var(--space-sm) var(--space-sm);
-        border-radius: var(--radius-md);
-        margin: var(--space-md) auto 0 auto;
-        max-width: 100%;
+      .cards-container {
+        padding: 0 var(--space-xs);
       }
 
       .form-section::before {
@@ -1006,21 +1128,52 @@
         font-size: var(--font-size-base);
       }
 
-      .form-grid {
+      /* Ensure vertical layout on mobile */
+      .input-cards-container {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .input-card {
+        flex: none;
+        min-width: auto;
+      }
+
+      .input-card-header {
+        margin-bottom: var(--space-sm);
+      }
+
+      .input-card-header .title {
+        font-size: var(--font-size-sm);
+      }
+
+      .input-card-grid {
         grid-template-columns: 1fr;
         gap: var(--space-sm);
+        align-items: stretch;
       }
 
       .form-group {
+        display: flex;
+        flex-direction: column;
         gap: var(--space-xs);
+        align-items: stretch;
+        margin-bottom: var(--space-sm);
       }
 
       .form-group label {
         font-size: var(--font-size-sm);
         font-weight: 600;
+        min-width: auto;
+        width: 100%;
+        margin-bottom: var(--space-xs);
+        text-align: left;
       }
 
       input[type="number"], select {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
         padding: var(--space-sm) var(--space-sm);
         font-size: var(--font-size-sm);
         border-radius: var(--radius-sm);
@@ -1163,10 +1316,8 @@
         gap: var(--space-sm);
       }
 
-      .form-section {
-        padding: var(--space-sm) var(--space-xs) var(--space-xs) var(--space-xs);
-        border-radius: var(--radius-sm);
-        margin: var(--space-sm) auto 0 auto;
+      .cards-container {
+        padding: 0 var(--space-xs);
       }
 
       .form-section::before {
@@ -1181,15 +1332,50 @@
         font-size: var(--font-size-sm);
       }
 
-      .form-grid {
+      /* Ensure vertical layout on small mobile */
+      .input-cards-container {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .input-card {
+        flex: none;
+        min-width: auto;
+      }
+
+      .input-card-header {
+        margin-bottom: var(--space-xs);
+      }
+
+      .input-card-header .title {
+        font-size: var(--font-size-xs);
+      }
+
+      .input-card-grid {
         gap: var(--space-xs);
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        align-items: stretch;
+        margin-bottom: var(--space-sm);
       }
 
       .form-group label {
         font-size: var(--font-size-xs);
+        font-weight: 600;
+        min-width: auto;
+        width: 100%;
+        margin-bottom: var(--space-xs);
+        text-align: left;
       }
 
       input[type="number"], select {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
         padding: var(--space-xs) var(--space-sm);
         font-size: var(--font-size-xs);
         border-radius: var(--radius-sm);
@@ -1938,53 +2124,74 @@
 </head>
 <body>
   <div class="page-header">
-    <div class="form-title">🎓 Student Pass Predictor</div>
-    <div class="dec">
-      Predict whether a student will <b>pass</b> or <b>fail</b> based on their study hours, sleep hours, attendance, class/test/assignment scores, and more using a Machine Learning model.
+    <div class="header-content">
+      <div class="form-title">🎓 Student Pass Predictor</div>
+      <div class="dec">
+        Predict whether a student will <b>pass</b> or <b>fail</b> based on their study hours, sleep hours, attendance, class/test/assignment scores, and more using a Machine Learning model.
+      </div>
     </div>
+    <button id="projectDetailsBtn" class="header-project-btn">
+      <i class="fas fa-info-circle"></i> <span class="btn-text">Project Details</span>
+    </button>
   </div>
   <div class="main-flex">
-    <div class="form-section" style="position:relative;">
-      <button id="projectDetailsBtn" style="position:absolute;top:18px;right:18px;z-index:10;background:linear-gradient(135deg,rgba(59,130,246,0.18) 0%,rgba(30,41,59,0.95) 100%);color:var(--primary-light);border:1.5px solid rgba(59,130,246,0.25);border-radius:50px;font-size:1.1em;font-weight:600;cursor:pointer;box-shadow:0 2px 12px rgba(59,130,246,0.10),0 1.5px 8px rgba(0,0,0,0.18);padding:10px 18px;transition:all 0.25s;display:flex;align-items:center;gap:8px;min-height:44px;min-width:44px;">
-        <i class="fas fa-info-circle"></i> <span class="btn-text">Project Details</span>
-      </button>
+    <div class="cards-container">
       <div class="form-card-header">
         <span class="icon"><i class="fas fa-user-graduate"></i></span>
         <span class="title">Student Details</span>
       </div>
       <form id="predictForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="study_hours">Study Hours (per day)</label>
-            <input type="number" id="study_hours" name="study_hours" min="1" max="12" required placeholder="e.g. 6">
+        <div class="input-cards-container">
+          <!-- General Factors Card -->
+          <div class="input-card">
+            <div class="input-card-header">
+              <span class="icon"><i class="fas fa-user-clock"></i></span>
+              <span class="title">General Factors</span>
+            </div>
+            <div class="input-card-grid">
+              <div class="form-group">
+                <label for="study_hours">Study Hours (per day)</label>
+                <input type="number" id="study_hours" name="study_hours" min="1" max="12" required placeholder="e.g. 6">
+              </div>
+              <div class="form-group">
+                <label for="sleep_hours">Sleep Hours (per day)</label>
+                <input type="number" id="sleep_hours" name="sleep_hours" min="4" max="12" required placeholder="e.g. 7">
+              </div>
+              <div class="form-group">
+                <label for="attendance">Attendance (%)</label>
+                <input type="number" id="attendance" name="attendance" min="40" max="100" required placeholder="e.g. 85">
+              </div>
+              <div class="form-group">
+                <label for="class_avg_score">Class Average Score (out of 100)</label>
+                <input type="number" id="class_avg_score" name="class_avg_score" min="40" max="100" required placeholder="e.g. 70">
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="sleep_hours">Sleep Hours (per day)</label>
-            <input type="number" id="sleep_hours" name="sleep_hours" min="4" max="12" required placeholder="e.g. 7">
-          </div>
-          <div class="form-group">
-            <label for="attendance">Attendance (%)</label>
-            <input type="number" id="attendance" name="attendance" min="40" max="100" required placeholder="e.g. 85">
-          </div>
-          <div class="form-group">
-            <label for="class_avg_score">Class Average Score (out of 100)</label>
-            <input type="number" id="class_avg_score" name="class_avg_score" min="40" max="100" required placeholder="e.g. 70">
-          </div>
-          <div class="form-group">
-            <label for="student_test_score">Student Test Score (out of 100)</label>
-            <input type="number" id="student_test_score" name="student_test_score" min="30" max="100" required placeholder="e.g. 75">
-          </div>
-          <div class="form-group">
-            <label for="student_assignment_score">Assignment Score (out of 100)</label>
-            <input type="number" id="student_assignment_score" name="student_assignment_score" min="30" max="100" required placeholder="e.g. 80">
-          </div>
-          <div class="form-group">
-            <label for="num_failed_before">Number of Past Failures</label>
-            <input type="number" id="num_failed_before" name="num_failed_before" min="0" max="5" required placeholder="e.g. 0">
-          </div>
-          <div class="form-group">
-            <label for="participation_score">Participation Score (0-10)</label>
-            <input type="number" id="participation_score" name="participation_score" min="0" max="10" required placeholder="e.g. 7">
+
+          <!-- Academic Performance Card -->
+          <div class="input-card">
+            <div class="input-card-header">
+              <span class="icon"><i class="fas fa-chart-line"></i></span>
+              <span class="title">Academic Performance</span>
+            </div>
+            <div class="input-card-grid">
+              <div class="form-group">
+                <label for="student_test_score">Student Test Score (out of 100)</label>
+                <input type="number" id="student_test_score" name="student_test_score" min="30" max="100" required placeholder="e.g. 75">
+              </div>
+              <div class="form-group">
+                <label for="student_assignment_score">Assignment Score (out of 100)</label>
+                <input type="number" id="student_assignment_score" name="student_assignment_score" min="30" max="100" required placeholder="e.g. 80">
+              </div>
+              <div class="form-group">
+                <label for="num_failed_before">Number of Past Failures</label>
+                <input type="number" id="num_failed_before" name="num_failed_before" min="0" max="5" required placeholder="e.g. 0">
+              </div>
+              <div class="form-group">
+                <label for="participation_score">Participation Score (0-10)</label>
+                <input type="number" id="participation_score" name="participation_score" min="0" max="10" required placeholder="e.g. 7">
+              </div>
+            </div>
           </div>
         </div>
         <div class="predict-row">

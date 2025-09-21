@@ -24,151 +24,359 @@
     }
 
     .certificates-container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1rem;
     }
 
     .certificates-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
     }
 
     .certificates-title {
-      font-size: 3rem;
+      font-size: 2rem;
       font-weight: 800;
       background: linear-gradient(90deg, var(--primary-light) 10%, var(--primary) 90%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .certificates-subtitle {
       color: var(--text-secondary);
-      font-size: 1.2rem;
-      max-width: 600px;
+      font-size: 1rem;
+      max-width: 500px;
       margin: 0 auto;
     }
 
     .certificates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
+      justify-items: center;
     }
 
     .certificate-card {
-      background: var(--cert-card-bg);
-      border-radius: 1rem;
-      border: 1px solid var(--cert-card-border);
-      box-shadow: var(--cert-shadow);
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 1.2rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       overflow: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(25px);
       position: relative;
+      cursor: pointer;
+      width: 100%;
+      max-width: 500px;
     }
 
     .certificate-card.featured {
       border: 2px solid var(--gold-color);
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, var(--cert-card-bg) 100%);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(15, 23, 42, 0.4) 100%);
+      box-shadow: 0 12px 40px rgba(251, 191, 36, 0.25);
     }
 
     .certificate-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(59, 130, 246, 0.4);
       border-color: var(--primary-light);
+      background: rgba(15, 23, 42, 0.6);
     }
 
-    .certificate-header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      padding: 2rem;
-      text-align: center;
-      position: relative;
+    .certificate-card.featured:hover {
+      box-shadow: 0 30px 70px rgba(251, 191, 36, 0.4);
+      border-color: var(--gold-color);
     }
 
-    .certificate-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      color: var(--gold-color);
+    .certificate-image {
+      width: 100%;
+      height: 350px;
+      object-fit: contain;
+      transition: all 0.4s ease;
+      filter: brightness(1.1) contrast(1.1) saturate(1.1);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.5rem;
+      display: block;
+      transform: scale(1.05);
+    }
+
+    .certificate-card:hover .certificate-image {
+      transform: scale(1.1);
+      filter: brightness(1.2) contrast(1.3) saturate(1.2);
+    }
+
+    .certificate-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(59, 130, 246, 0.1) 50%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .certificate-card:hover .certificate-overlay {
+      opacity: 1;
+    }
+
+    .view-details-btn {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .view-details-btn:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 1) 0%, rgba(30, 64, 175, 1) 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
     }
 
     .featured-badge {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: var(--gold-color);
+      background: linear-gradient(135deg, var(--gold-color) 0%, #f59e0b 100%);
       color: #1f2937;
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 2rem;
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
+      z-index: 2;
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+      backdrop-filter: blur(10px);
     }
 
-    .certificate-title {
+    /* Premium Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(25px);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(50px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .modal-title {
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
-      color: white;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .certificate-issuer {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      color: white;
-      margin-bottom: 1rem;
+    .modal-issuer {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
     }
 
-    .certificate-date {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      font-size: 0.9rem;
-      display: inline-block;
-    }
-
-    .certificate-content {
+    .modal-body {
       padding: 2rem;
     }
 
-    .certificate-description {
+    .modal-description {
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1rem;
     }
 
-    .certificate-skills {
+    .modal-skills {
       margin-bottom: 2rem;
     }
 
-    .certificate-skills h4 {
+    .modal-skills h4 {
       color: var(--cert-accent);
       margin-bottom: 1rem;
       font-weight: 600;
+      font-size: 1.2rem;
     }
 
-    .skills-grid {
+    .modal-skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0.8rem;
+      gap: 0.6rem;
     }
 
-    .skill-tag {
-      background: rgba(59, 130, 246, 0.1);
+    .modal-skill-tag {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%);
       color: var(--cert-accent);
-      padding: 0.5rem 0.8rem;
-      border-radius: 0.3rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
       border: 1px solid rgba(59, 130, 246, 0.3);
       text-align: center;
       font-size: 0.9rem;
       font-weight: 500;
       transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-skill-tag:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.3) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .certificate-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 1.2rem;
+      color: white;
+      text-align: center;
+    }
+
+    .certificate-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: white;
+    }
+
+    .certificate-issuer {
+      font-size: 1rem;
+      opacity: 0.9;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .certificate-date {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+    }
+
+    .certificate-content {
+      padding: 1.2rem;
+    }
+
+    .certificate-description {
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .certificate-skills {
+      margin-bottom: 1.2rem;
+    }
+
+    .certificate-skills h4 {
+      color: var(--cert-accent);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--cert-accent);
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.3rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
     }
 
     .skill-tag:hover {
-      background: var(--primary);
+      background: rgba(59, 130, 246, 0.25);
       color: white;
       transform: translateY(-1px);
     }
@@ -177,36 +385,45 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .certificate-card:hover .certificate-actions {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .action-btn {
-      padding: 0.8rem 1.5rem;
-      border-radius: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.4rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       border: none;
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
     }
 
     .btn-download {
-      background: var(--primary);
+      background: rgba(16, 185, 129, 0.9);
       color: white;
     }
 
     .btn-download:hover {
-      background: var(--primary-dark);
+      background: rgba(16, 185, 129, 1);
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     }
 
     .btn-view {
-      background: transparent;
-      color: var(--cert-accent);
-      border: 1px solid var(--primary);
+      background: rgba(59, 130, 246, 0.9);
+      color: white;
     }
 
     .btn-view:hover {
@@ -214,86 +431,81 @@
       color: white;
     }
 
-    .stats-section {
-      background: var(--cert-card-bg);
-      border-radius: 1rem;
-      border: 1px solid var(--cert-card-border);
-      padding: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 1.5rem;
-      background: rgba(59, 130, 246, 0.05);
-      border-radius: 0.5rem;
-      border: 1px solid rgba(59, 130, 246, 0.1);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--cert-accent);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      color: var(--text-secondary);
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-    }
-
-    .certificates-cta {
-      text-align: center;
-      padding: 3rem 2rem;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, var(--cert-card-bg) 100%);
-      border-radius: 1rem;
-      border: 1px solid var(--cert-card-border);
-    }
-
-    .certificates-cta h3 {
-      margin-bottom: 1rem;
-      color: var(--light);
-    }
-
-    .certificates-cta p {
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
     @media (max-width: 768px) {
       .certificates-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
       }
 
-      .certificate-actions {
-        flex-direction: column;
-        align-items: center;
+      .certificate-card {
+        margin: 0 auto;
+        max-width: 350px;
       }
 
-      .action-btn {
-        width: 100%;
-        justify-content: center;
+      .certificate-image {
+        height: 280px;
+        padding: 1rem;
+        transform: scale(1.03);
+      }
+
+      .view-details-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .featured-badge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
       }
 
       .certificates-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
       }
 
-      .skills-grid {
+      .certificates-subtitle {
+        font-size: 0.9rem;
+      }
+
+      /* Modal responsiveness */
+      .modal-container {
+        width: 95%;
+        margin: 1rem;
+        max-height: 95vh;
+      }
+
+      .modal-header {
+        padding: 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+      }
+
+      .modal-issuer {
+        font-size: 1rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      .modal-description {
+        font-size: 0.9rem;
+      }
+
+      .modal-skills h4 {
+        font-size: 1rem;
+      }
+
+      .modal-skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.4rem;
+      }
+
+      .modal-skill-tag {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -305,139 +517,134 @@
       <p class="certificates-subtitle">Professional certifications and achievements that validate my skills and dedication to continuous learning</p>
     </div>
 
-    <!-- Statistics Section -->
-    <div class="stats-section">
-      <h2 style="text-align: center; margin-bottom: 1rem; color: var(--light);">
-        <i class="fas fa-chart-bar"></i> Achievement Overview
-      </h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-number">2</span>
-          <span class="stat-label">Certificates</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">15+</span>
-          <span class="stat-label">Skills Validated</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">100+</span>
-          <span class="stat-label">Hours of Learning</span>
-        </div>
-      </div>
-    </div>
-
     <!-- Certificates Grid -->
     <div class="certificates-grid">
-      <div class="certificate-card featured">
-        <div class="certificate-header">
-          <div class="featured-badge">Featured</div>
-          <div class="certificate-icon">
-            <i class="fas fa-award"></i>
-          </div>
-          <h2 class="certificate-title">Certificate Title 1</h2>
-          <p class="certificate-issuer">Issuing Organization</p>
-          <div class="certificate-date">
-            <i class="fas fa-calendar"></i> January 2025
-          </div>
+      <div class="certificate-card featured" onclick="showCertificateModal(1)">
+        <img src="{{ url_for('static', filename='data/AI for Beginners.png') }}" alt="AI for Beginners Certificate - Hewlett Packard" class="certificate-image">
+        <div class="certificate-overlay">
+          <button class="view-details-btn">
+            <i class="fas fa-eye"></i> View Details
+          </button>
         </div>
-        <div class="certificate-content">
-          <p class="certificate-description">
-            Comprehensive certification covering advanced topics in web development,
-            including modern frameworks, best practices, and industry standards.
-          </p>
-
-          <div class="certificate-skills">
-            <h4><i class="fas fa-code"></i> Skills Covered</h4>
-            <div class="skills-grid">
-              <span class="skill-tag">Web Development</span>
-              <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">React</span>
-              <span class="skill-tag">Node.js</span>
-              <span class="skill-tag">Database Design</span>
-              <span class="skill-tag">API Development</span>
-              <span class="skill-tag">Testing</span>
-              <span class="skill-tag">Deployment</span>
-            </div>
-          </div>
-
-          <div class="certificate-actions">
-            <a href="{{ url_for('download_certificate', cert_id=1) }}" class="action-btn btn-download">
-              <i class="fas fa-download"></i> Download
-            </a>
-            <button class="action-btn btn-view" onclick="viewCertificate(1)">
-              <i class="fas fa-eye"></i> View Details
-            </button>
-          </div>
-        </div>
+        <div class="featured-badge">Featured</div>
       </div>
 
-      <div class="certificate-card">
-        <div class="certificate-header">
-          <div class="certificate-icon">
-            <i class="fas fa-certificate"></i>
-          </div>
-          <h2 class="certificate-title">Certificate Title 2</h2>
-          <p class="certificate-issuer">Issuing Organization</p>
-          <div class="certificate-date">
-            <i class="fas fa-calendar"></i> December 2024
-          </div>
+      <div class="certificate-card featured" onclick="showCertificateModal(2)">
+        <img src="{{ url_for('static', filename='data/Introduction to Cybersecurity Awareness.png') }}" alt="Cybersecurity Certificate - Hewlett Packard" class="certificate-image">
+        <div class="certificate-overlay">
+          <button class="view-details-btn">
+            <i class="fas fa-eye"></i> View Details
+          </button>
         </div>
-        <div class="certificate-content">
-          <p class="certificate-description">
-            Specialized certification focusing on software development methodologies,
-            system design, and advanced programming concepts.
-          </p>
-
-          <div class="certificate-skills">
-            <h4><i class="fas fa-code"></i> Skills Covered</h4>
-            <div class="skills-grid">
-              <span class="skill-tag">Software Engineering</span>
-              <span class="skill-tag">System Design</span>
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">Data Structures</span>
-              <span class="skill-tag">Algorithms</span>
-              <span class="skill-tag">Problem Solving</span>
-              <span class="skill-tag">Git</span>
-              <span class="skill-tag">CI/CD</span>
-            </div>
-          </div>
-
-          <div class="certificate-actions">
-            <a href="{{ url_for('download_certificate', cert_id=2) }}" class="action-btn btn-download">
-              <i class="fas fa-download"></i> Download
-            </a>
-            <button class="action-btn btn-view" onclick="viewCertificate(2)">
-              <i class="fas fa-eye"></i> View Details
-            </button>
-          </div>
-        </div>
+        <div class="featured-badge">Featured</div>
       </div>
     </div>
 
-    <!-- Call to Action -->
-    <div class="certificates-cta">
-      <h3><i class="fas fa-graduation-cap"></i> Continuous Learning Journey</h3>
-      <p>
-        I'm committed to continuous learning and professional development.
-        These certificates represent my dedication to staying current with
-        industry trends and best practices.
-      </p>
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="{{ url_for('contact') }}" class="action-btn btn-download" style="background: var(--gold-color); color: #1f2937;">
-          <i class="fas fa-envelope"></i> Get In Touch
-        </a>
-        <a href="{{ url_for('blog') }}" class="action-btn btn-view">
-          <i class="fas fa-book"></i> Read My Blog
-        </a>
+    <!-- Premium Modal -->
+    <div id="certificateModal" class="modal-overlay">
+      <div class="modal-container">
+        <button class="modal-close" onclick="closeCertificateModal()">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+          <h2 id="modalTitle" class="modal-title">Certificate Title</h2>
+          <p id="modalIssuer" class="modal-issuer">Issuing Organization</p>
+        </div>
+        <div class="modal-body">
+          <p id="modalDescription" class="modal-description">Certificate description will appear here.</p>
+
+          <div class="modal-skills">
+            <h4><i class="fas fa-code"></i> Skills Covered</h4>
+            <div id="modalSkills" class="modal-skills-grid">
+              <!-- Skills will be populated here -->
+            </div>
+          </div>
       </div>
     </div>
   </div>
 
   <script>
-    function viewCertificate(certId) {
-      // This would open a modal or navigate to a detailed view
-      alert(`Viewing details for Certificate ${certId}. This feature can be enhanced with a modal or detailed page.`);
+    // Certificate data
+    const certificates = {
+      1: {
+        title: "AI for Beginners",
+        issuer: "Hewlett Packard",
+        date: "January 2025",
+        description: "Comprehensive course covering fundamental concepts of artificial intelligence, machine learning basics, neural networks, and practical AI applications.",
+        skills: ["Artificial Intelligence", "Machine Learning", "Neural Networks", "Python Programming", "Data Analysis", "AI Ethics", "AI Applications", "Problem Solving"],
+        pdfUrl: "{{ url_for('static', filename='data/AI for Beginners.pdf') }}",
+        imageUrl: "{{ url_for('static', filename='data/AI for Beginners.png') }}"
+      },
+      2: {
+        title: "Introduction to Cybersecurity",
+        issuer: "Hewlett Packard",
+        date: "December 2024",
+        description: "Essential cybersecurity awareness training covering threat identification, security best practices, data protection, and cyber hygiene fundamentals.",
+        skills: ["Cybersecurity", "Threat Detection", "Data Protection", "Security Awareness", "Risk Management", "Best Practices", "Compliance", "Incident Response"],
+        pdfUrl: "{{ url_for('static', filename='data/Introduction to Cybersecurity Awareness.pdf') }}",
+        imageUrl: "{{ url_for('static', filename='data/Introduction to Cybersecurity Awareness.png') }}"
+      }
+    };
+
+    function showCertificateModal(certId) {
+      const cert = certificates[certId];
+      if (!cert) return;
+
+      // Populate modal content
+      document.getElementById('modalTitle').textContent = cert.title;
+      document.getElementById('modalIssuer').textContent = cert.issuer;
+      document.getElementById('modalDescription').textContent = cert.description;
+
+      // Populate skills
+      const skillsContainer = document.getElementById('modalSkills');
+      skillsContainer.innerHTML = '';
+      cert.skills.forEach(skill => {
+        const skillElement = document.createElement('span');
+        skillElement.className = 'modal-skill-tag';
+        skillElement.textContent = skill;
+        skillsContainer.appendChild(skillElement);
+      });
+
+      // Show modal
+      const modal = document.getElementById('certificateModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
     }
+
+    function closeCertificateModal() {
+      const modal = document.getElementById('certificateModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('certificateModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeCertificateModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeCertificateModal();
+      }
+    });
+
+    // Enhanced hover effects for certificate cards
+    document.addEventListener('DOMContentLoaded', function() {
+      const certificateCards = document.querySelectorAll('.certificate-card');
+
+      certificateCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    });
   </script>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>

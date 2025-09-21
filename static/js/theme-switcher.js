@@ -28,15 +28,19 @@ class ThemeSwitcher {
 
     this.isAnimating = true;
     this.theme = this.theme === 'dark' ? 'light' : 'dark';
-    
+
     // Add a class to trigger the animation
-    this.themeToggle.classList.add('animating');
-    
+    if (this.themeToggle) {
+      this.themeToggle.classList.add('animating');
+    }
+
     this.setTheme(this.theme);
 
     // Remove the animating class after the transition is complete
     setTimeout(() => {
-      this.themeToggle.classList.remove('animating');
+      if (this.themeToggle) {
+        this.themeToggle.classList.remove('animating');
+      }
       this.isAnimating = false;
     }, 400); // Match the CSS transition duration
   }
@@ -45,7 +49,7 @@ class ThemeSwitcher {
     if (this.themeToggle) {
       this.themeToggle.addEventListener('click', () => this.toggleTheme());
     } else {
-      console.error('Theme toggle button not found!');
+      console.warn('Theme toggle button not found - theme switching disabled');
     }
   }
 }

@@ -16,6 +16,7 @@
       --resume-card-bg: rgba(15, 23, 42, 0.7);
       --resume-card-border: rgba(59, 130, 246, 0.2);
       --resume-accent: #60a5fa;
+      --skill-accent: #22c55e;
       --text-secondary: #94a3b8;
       --resume-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       --success-color: #10b981;
@@ -58,26 +59,65 @@
     }
 
     .resume-card {
-      background: var(--resume-card-bg);
-      border-radius: 0.6rem;
-      border: 1px solid var(--resume-card-border);
-      box-shadow: var(--resume-shadow);
+      background: rgba(15, 23, 42, 0.3);
+      border-radius: 0.8rem;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       overflow: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(25px);
+      position: relative;
+    }
+
+    .resume-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+      transition: all 0.6s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .resume-card.featured {
+      border: 2px solid var(--skill-accent);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%);
+      box-shadow: 0 12px 40px rgba(34, 197, 94, 0.25);
+    }
+
+    .resume-card.featured:hover {
+      box-shadow: 0 30px 70px rgba(34, 197, 94, 0.4);
+      border-color: var(--skill-accent);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(15, 23, 42, 0.5) 100%);
+      backdrop-filter: blur(30px);
     }
 
     .resume-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(59, 130, 246, 0.4);
       border-color: var(--primary-light);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(30px);
+    }
+
+    .resume-card:hover::before {
+      left: 100%;
     }
 
     .resume-header-card {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      padding: 1rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%);
+      padding: 1.2rem;
       color: white;
       text-align: center;
+      backdrop-filter: blur(15px);
+      position: relative;
+      z-index: 2;
     }
 
     .resume-icon {
@@ -136,6 +176,8 @@
     .download-section {
       text-align: center;
       margin-top: 0.5rem;
+      position: relative;
+      z-index: 2;
     }
 
     .download-btn {
@@ -160,8 +202,21 @@
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
 
-    .download-btn i {
-      font-size: 0.9rem;
+    .featured-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, var(--skill-accent) 0%, #16a34a 100%);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      z-index: 3;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .status-indicator {
@@ -269,7 +324,7 @@
     </div>
 
     <div class="resume-grid">
-      <div class="resume-card">
+      <div class="resume-card featured">
         <div class="resume-header-card">
           <div class="resume-icon">
             <i class="fas fa-code"></i>
@@ -300,7 +355,7 @@
           </div>
 
           <div class="download-section">
-            <a href="{{ url_for('download_web_dev_resume') }}" class="download-btn">
+            <a href="{{ url_for('static', filename='data/Resume(Full Stack Web Developer).pdf') }}" class="download-btn" download>
               <i class="fas fa-download"></i>
               Download PDF
             </a>
@@ -308,7 +363,7 @@
         </div>
       </div>
 
-      <div class="resume-card">
+      <div class="resume-card featured">
         <div class="resume-header-card">
           <div class="resume-icon">
             <i class="fas fa-laptop-code"></i>
@@ -339,25 +394,13 @@
           </div>
 
           <div class="download-section">
-            <a href="{{ url_for('download_software_dev_resume') }}" class="download-btn">
+            <a href="{{ url_for('static', filename='data/Resume(Software_Developer).pdf') }}" class="download-btn" download>
               <i class="fas fa-download"></i>
               Download PDF
             </a>
           </div>
         </div>
       </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--resume-card-bg); border-radius: 1rem; border: 1px solid var(--resume-card-border);">
-      <h3 style="margin-bottom: 0.8rem; color: var(--light);">
-        <i class="fas fa-info-circle"></i> Need a Custom Resume?
-      </h3>
-      <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-        I can create customized resumes tailored to specific job requirements or company preferences.
-      </p>
-      <a href="{{ url_for('contact') }}" class="download-btn">
-        <i class="fas fa-envelope"></i> Contact Me
-      </a>
     </div>
   </div>
 
