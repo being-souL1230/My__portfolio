@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Rishab | Full Stack Web Developer</title>
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dark-mode.css') }}">
+
+  <style>
+    /* Resume-specific styles */
+    :root {
+      --resume-card-bg: rgba(15, 23, 42, 0.7);
+      --resume-card-border: rgba(59, 130, 246, 0.2);
+      --resume-accent: #60a5fa;
+      --text-secondary: #94a3b8;
+      --resume-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+    }
+
+    .resume-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .resume-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .resume-title {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary-light) 10%, var(--primary) 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .resume-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resume-card {
+      background: var(--resume-card-bg);
+      border-radius: 0.6rem;
+      border: 1px solid var(--resume-card-border);
+      box-shadow: var(--resume-shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .resume-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+      border-color: var(--primary-light);
+    }
+
+    .resume-header-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 1rem;
+      color: white;
+      text-align: center;
+    }
+
+    .resume-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .resume-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .resume-card-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .resume-content {
+      padding: 1rem;
+    }
+
+    .resume-description {
+      color: var(--text-secondary);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-item {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--resume-accent);
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.2rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.7rem;
+      transition: all 0.3s ease;
+    }
+
+    .skill-item:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .download-section {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .download-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .download-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .download-btn i {
+      font-size: 0.9rem;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .status-available {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success-color);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-unavailable {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning-color);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .resume-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .resume-card {
+        margin: 0 auto;
+        max-width: 280px;
+      }
+
+      .resume-header-card {
+        padding: 0.8rem;
+      }
+
+      .resume-content {
+        padding: 0.8rem;
+      }
+
+      .resume-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .resume-card-title {
+        font-size: 1rem;
+      }
+
+      .resume-card-subtitle {
+        font-size: 0.8rem;
+      }
+
+      .resume-description {
+        font-size: 0.75rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .skills-list {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 0.3rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .skill-item {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.65rem;
+        border-radius: 0.15rem;
+      }
+
+      .download-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+
+      .download-btn i {
+        font-size: 0.8rem;
+      }
+
+      .status-indicator {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.4rem;
+      }
+
+      .resume-title {
+        font-size: 1.8rem;
+      }
+
+      .resume-subtitle {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <div class="resume-header">
+      <h1 class="resume-title">Resume & CV</h1>
+      <p class="resume-subtitle">Download my professional resumes tailored for different roles and career paths</p>
+    </div>
+
+    <div class="resume-grid">
+      <div class="resume-card">
+        <div class="resume-header-card">
+          <div class="resume-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h2 class="resume-card-title">Web Developer Resume</h2>
+          <p class="resume-card-subtitle">Frontend & Backend Development</p>
+          <div class="status-indicator status-available">
+            <i class="fas fa-check-circle"></i>
+            Available for Download
+          </div>
+        </div>
+        <div class="resume-content">
+          <p class="resume-description">
+            Comprehensive resume highlighting my expertise in full-stack web development,
+            including modern frameworks, responsive design, and web technologies.
+          </p>
+
+          <h3>Key Skills</h3>
+          <div class="skills-list">
+            <div class="skill-item">HTML/CSS</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">React</div>
+            <div class="skill-item">Node.js</div>
+            <div class="skill-item">Flask</div>
+            <div class="skill-item">Django</div>
+            <div class="skill-item">MongoDB</div>
+            <div class="skill-item">MySQL</div>
+          </div>
+
+          <div class="download-section">
+            <a href="{{ url_for('download_web_dev_resume') }}" class="download-btn">
+              <i class="fas fa-download"></i>
+              Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="resume-card">
+        <div class="resume-header-card">
+          <div class="resume-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h2 class="resume-card-title">Software Developer Resume</h2>
+          <p class="resume-card-subtitle">Full-Stack Development & Engineering</p>
+          <div class="status-indicator status-available">
+            <i class="fas fa-check-circle"></i>
+            Available for Download
+          </div>
+        </div>
+        <div class="resume-content">
+          <p class="resume-description">
+            Detailed resume showcasing my software engineering skills, including
+            system design, algorithms, data structures, and development methodologies.
+          </p>
+
+          <h3>Key Skills</h3>
+          <div class="skills-list">
+            <div class="skill-item">Python</div>
+            <div class="skill-item">C/C++</div>
+            <div class="skill-item">Java</div>
+            <div class="skill-item">System Design</div>
+            <div class="skill-item">Algorithms</div>
+            <div class="skill-item">Data Structures</div>
+            <div class="skill-item">Git</div>
+            <div class="skill-item">Linux</div>
+          </div>
+
+          <div class="download-section">
+            <a href="{{ url_for('download_software_dev_resume') }}" class="download-btn">
+              <i class="fas fa-download"></i>
+              Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--resume-card-bg); border-radius: 1rem; border: 1px solid var(--resume-card-border);">
+      <h3 style="margin-bottom: 0.8rem; color: var(--light);">
+        <i class="fas fa-info-circle"></i> Need a Custom Resume?
+      </h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+        I can create customized resumes tailored to specific job requirements or company preferences.
+      </p>
+      <a href="{{ url_for('contact') }}" class="download-btn">
+        <i class="fas fa-envelope"></i> Contact Me
+      </a>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

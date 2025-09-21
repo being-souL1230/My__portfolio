@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_file
 import os
 import json
 import sys
@@ -132,9 +132,81 @@ def home():
 def projects():
     return render_template("projects.html")
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
+@app.route("/blog")
+def blog():
+    return render_template("blog.html")
+
+@app.route("/resume")
+def resume():
+    return render_template("resume.html")
+
+@app.route("/certificates")
+def certificates():
+    return render_template("certificates.html")
+
+# Resume download routes
+@app.route("/download/resume/web-developer")
+def download_web_dev_resume():
+    try:
+        resume_path = os.path.join(app.root_path, 'static', 'resumes', 'web_developer_resume.pdf')
+        if os.path.exists(resume_path):
+            return send_file(
+                resume_path,
+                as_attachment=True,
+                download_name='Rishab_Dixit_Web_Developer_Resume.pdf'
+            )
+        else:
+            flash('Resume file not found', 'error')
+            return redirect(url_for('resume'))
+    except Exception as e:
+        flash('Error downloading resume', 'error')
+        print(f"Resume download error: {e}")
+        return redirect(url_for('resume'))
+
+@app.route("/download/resume/software-developer")
+def download_software_dev_resume():
+    try:
+        resume_path = os.path.join(app.root_path, 'static', 'resumes', 'software_developer_resume.pdf')
+        if os.path.exists(resume_path):
+            return send_file(
+                resume_path,
+                as_attachment=True,
+                download_name='Rishab_Dixit_Software_Developer_Resume.pdf'
+            )
+        else:
+            flash('Resume file not found', 'error')
+            return redirect(url_for('resume'))
+    except Exception as e:
+        flash('Error downloading resume', 'error')
+        print(f"Resume download error: {e}")
+        return redirect(url_for('resume'))
+
+@app.route("/download/certificate/<int:cert_id>")
+def download_certificate(cert_id):
+    try:
+        cert_paths = {
+            1: os.path.join(app.root_path, 'static', 'certificates', 'certificate_1.pdf'),
+            2: os.path.join(app.root_path, 'static', 'certificates', 'certificate_2.pdf')
+        }
+
+        cert_names = {
+            1: 'Certificate_1.pdf',
+            2: 'Certificate_2.pdf'
+        }
+
+        if cert_id in cert_paths and os.path.exists(cert_paths[cert_id]):
+            return send_file(
+                cert_paths[cert_id],
+                as_attachment=True,
+                download_name=cert_names[cert_id]
+            )
+        else:
+            flash('Certificate not found', 'error')
+            return redirect(url_for('certificates'))
+    except Exception as e:
+        flash('Error downloading certificate', 'error')
+        print(f"Certificate download error: {e}")
+        return redirect(url_for('certificates'))
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():

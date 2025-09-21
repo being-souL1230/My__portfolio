@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates - Rishab | Full Stack Web Developer</title>
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dark-mode.css') }}">
+
+  <style>
+    /* Certificates-specific styles */
+    :root {
+      --cert-card-bg: rgba(15, 23, 42, 0.7);
+      --cert-card-border: rgba(59, 130, 246, 0.2);
+      --cert-accent: #60a5fa;
+      --text-secondary: #94a3b8;
+      --cert-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --success-color: #10b981;
+      --gold-color: #fbbf24;
+      --silver-color: #9ca3af;
+    }
+
+    .certificates-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .certificates-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .certificates-title {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary-light) 10%, var(--primary) 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .certificates-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .certificates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .certificate-card {
+      background: var(--cert-card-bg);
+      border-radius: 1rem;
+      border: 1px solid var(--cert-card-border);
+      box-shadow: var(--cert-shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      position: relative;
+    }
+
+    .certificate-card.featured {
+      border: 2px solid var(--gold-color);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, var(--cert-card-bg) 100%);
+    }
+
+    .certificate-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+      border-color: var(--primary-light);
+    }
+
+    .certificate-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .certificate-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--gold-color);
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--gold-color);
+      color: #1f2937;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .certificate-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .certificate-issuer {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .certificate-date {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    .certificate-content {
+      padding: 2rem;
+    }
+
+    .certificate-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .certificate-skills {
+      margin-bottom: 2rem;
+    }
+
+    .certificate-skills h4 {
+      color: var(--cert-accent);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .skill-tag {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--cert-accent);
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.3rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .certificate-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .action-btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-download {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-download:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-view {
+      background: transparent;
+      color: var(--cert-accent);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-view:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .stats-section {
+      background: var(--cert-card-bg);
+      border-radius: 1rem;
+      border: 1px solid var(--cert-card-border);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 0.5rem;
+      border: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--cert-accent);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .certificates-cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, var(--cert-card-bg) 100%);
+      border-radius: 1rem;
+      border: 1px solid var(--cert-card-border);
+    }
+
+    .certificates-cta h3 {
+      margin-bottom: 1rem;
+      color: var(--light);
+    }
+
+    .certificates-cta p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+      .certificates-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .certificate-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .certificates-title {
+        font-size: 2.5rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificates-container">
+    <div class="certificates-header">
+      <h1 class="certificates-title">Certificates & Achievements</h1>
+      <p class="certificates-subtitle">Professional certifications and achievements that validate my skills and dedication to continuous learning</p>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+      <h2 style="text-align: center; margin-bottom: 1rem; color: var(--light);">
+        <i class="fas fa-chart-bar"></i> Achievement Overview
+      </h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">2</span>
+          <span class="stat-label">Certificates</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Skills Validated</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100+</span>
+          <span class="stat-label">Hours of Learning</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificates Grid -->
+    <div class="certificates-grid">
+      <div class="certificate-card featured">
+        <div class="certificate-header">
+          <div class="featured-badge">Featured</div>
+          <div class="certificate-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <h2 class="certificate-title">Certificate Title 1</h2>
+          <p class="certificate-issuer">Issuing Organization</p>
+          <div class="certificate-date">
+            <i class="fas fa-calendar"></i> January 2025
+          </div>
+        </div>
+        <div class="certificate-content">
+          <p class="certificate-description">
+            Comprehensive certification covering advanced topics in web development,
+            including modern frameworks, best practices, and industry standards.
+          </p>
+
+          <div class="certificate-skills">
+            <h4><i class="fas fa-code"></i> Skills Covered</h4>
+            <div class="skills-grid">
+              <span class="skill-tag">Web Development</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Database Design</span>
+              <span class="skill-tag">API Development</span>
+              <span class="skill-tag">Testing</span>
+              <span class="skill-tag">Deployment</span>
+            </div>
+          </div>
+
+          <div class="certificate-actions">
+            <a href="{{ url_for('download_certificate', cert_id=1) }}" class="action-btn btn-download">
+              <i class="fas fa-download"></i> Download
+            </a>
+            <button class="action-btn btn-view" onclick="viewCertificate(1)">
+              <i class="fas fa-eye"></i> View Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="certificate-card">
+        <div class="certificate-header">
+          <div class="certificate-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h2 class="certificate-title">Certificate Title 2</h2>
+          <p class="certificate-issuer">Issuing Organization</p>
+          <div class="certificate-date">
+            <i class="fas fa-calendar"></i> December 2024
+          </div>
+        </div>
+        <div class="certificate-content">
+          <p class="certificate-description">
+            Specialized certification focusing on software development methodologies,
+            system design, and advanced programming concepts.
+          </p>
+
+          <div class="certificate-skills">
+            <h4><i class="fas fa-code"></i> Skills Covered</h4>
+            <div class="skills-grid">
+              <span class="skill-tag">Software Engineering</span>
+              <span class="skill-tag">System Design</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Data Structures</span>
+              <span class="skill-tag">Algorithms</span>
+              <span class="skill-tag">Problem Solving</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">CI/CD</span>
+            </div>
+          </div>
+
+          <div class="certificate-actions">
+            <a href="{{ url_for('download_certificate', cert_id=2) }}" class="action-btn btn-download">
+              <i class="fas fa-download"></i> Download
+            </a>
+            <button class="action-btn btn-view" onclick="viewCertificate(2)">
+              <i class="fas fa-eye"></i> View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="certificates-cta">
+      <h3><i class="fas fa-graduation-cap"></i> Continuous Learning Journey</h3>
+      <p>
+        I'm committed to continuous learning and professional development.
+        These certificates represent my dedication to staying current with
+        industry trends and best practices.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('contact') }}" class="action-btn btn-download" style="background: var(--gold-color); color: #1f2937;">
+          <i class="fas fa-envelope"></i> Get In Touch
+        </a>
+        <a href="{{ url_for('blog') }}" class="action-btn btn-view">
+          <i class="fas fa-book"></i> Read My Blog
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function viewCertificate(certId) {
+      // This would open a modal or navigate to a detailed view
+      alert(`Viewing details for Certificate ${certId}. This feature can be enhanced with a modal or detailed page.`);
+    }
+  </script>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
