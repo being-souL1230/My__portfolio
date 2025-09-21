@@ -217,6 +217,7 @@
         let hoverTimeout;
         let playTimeout;
 
+        
         // Play video on hover with slight delay
         const profileCircle = document.querySelector('.profile-circle');
         profileCircle.addEventListener('mouseenter', () => {
