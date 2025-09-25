@@ -17,13 +17,14 @@
       };
 
       // Projects Data with GitHub repo links
+      const projectsPerPage = 6;
       const projects = [
         {
           title: "LeetCode Platform",
           tags: ["Flask", "Monaco", "Judge0", "Python", "JavaScript"],
           description: [
             "A full-stack coding platform inspired by LeetCode, featuring a Monaco code editor with syntax highlighting and autocomplete. The platform includes a curated set of coding problems categorized by difficulty and topic.",
-            "Integrated with Judge0 API for real-time code execution in multiple programming languages. Implemented user authentication, submission history, and a leaderboard to track top performers."
+            "Implemented user authentication, submission history, and a leaderboard to track top performers."
           ],
           tech: [
             "Frontend: HTML, CSS, JavaScript, Monaco Editor",
@@ -153,6 +154,57 @@
           ],
           demo: "/demo/pass-predictor",
           repo: null // No repo for this project
+        },
+        {
+          title: "GitGenius - AI-Powered Test Case Generator",
+          tags: ["Python", "Flask", "SQLAlchemy", "Groq API", "AI Integration", "Auth0"],
+          description: [
+            "An intelligent web application that revolutionizes software testing by automatically generating comprehensive, production-ready test cases for GitHub repositories using advanced AI technology. The application seamlessly integrates with Auth0 for secure user authentication and leverages Groq's powerful language models to create intelligent test cases across multiple programming languages and frameworks.",
+            "Features include multi-language support (Python, JavaScript, Java, C++), intelligent repository analysis, edge case detection, batch processing, real-time analytics dashboard, and comprehensive export functionality for various testing frameworks."
+          ],
+          tech: [
+            "Backend: Python 3.11+, Flask 3.1.1, SQLAlchemy 2.0.42",
+            "AI Engine: Groq API (Llama3-8B model) for intelligent test generation",
+            "Database: SQLite/PostgreSQL with SQLAlchemy ORM",
+            "Authentication: Auth0 with secure user management",
+            "Frontend: HTML5, CSS3, Bootstrap 5, JavaScript"
+          ],
+          features: [
+            "AI-powered test case generation with Groq language models",
+            "Auth0 integration for secure user authentication",
+            "Multi-language support (Python, JavaScript, Java, C++)",
+            "Intelligent repository analysis and pattern recognition",
+            "Real-time analytics dashboard with usage metrics",
+            "Export functionality for unittest, pytest, Jest formats"
+          ],
+          repo: null, // No GitHub repo link
+          demo: "https://ai-gitgenius.onrender.com"
+        },
+        {
+          title: "AeroForecast Weather Application",
+          tags: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Express.js", "PostgreSQL"],
+          description: [
+            "A modern, feature-rich weather application built with cutting-edge web technologies, providing comprehensive weather information through an intuitive interface that adapts to different weather conditions. The application combines accurate weather data from reliable sources with beautiful animations and real-time updates.",
+            "Features include current weather display, 7-day forecasting, hourly predictions, location management with geolocation support, air quality monitoring, and AI-powered suggestions for clothing, activities, and travel based on weather conditions."
+          ],
+          tech: [
+            "Frontend: React 18, TypeScript, Vite, Tailwind CSS, Radix UI",
+            "Backend: Express.js, TypeScript, PostgreSQL, Drizzle ORM",
+            "APIs: Open-Meteo API (Weather, Geocoding, Air Quality)",
+            "Real-time: WebSocket for live updates",
+            "State Management: React Query (TanStack Query)",
+            "Authentication: Express Session, Passport.js"
+          ],
+          features: [
+            "Real-time weather data with animated backgrounds",
+            "7-day forecast with detailed hourly predictions",
+            "Location search with autocomplete and favorites",
+            "Air quality monitoring with health recommendations",
+            "AI-powered suggestions for clothing and activities",
+            "Weather alerts and severe condition indicators"
+          ],
+          repo: null, // No GitHub repo link
+          demo: "https://weather-app-2u2m.onrender.com"
         }
       ];
 
@@ -163,29 +215,47 @@
         'fas fa-building',         // College ERP
         'fas fa-brain',            // Mood Detector
         'fas fa-comments',         // Chat App
-        'fas fa-chart-line'        // Pass Predictor
+        'fas fa-chart-line',       // Pass Predictor
+        'fas fa-flask',            // GitGenius - AI-Powered Test Case Generator
+        'fas fa-cloud-sun-rain'    // AeroForecast Weather Application
       ];
       const PROJECT_YEAR = '2025';
 
-      // Initialize Projects
+      // Initialize Projects with pagination
+      let currentPage = 1;
+      let startIndex = (currentPage - 1) * projectsPerPage;
+      let endIndex = startIndex + projectsPerPage;
+      let projectsToShow = projects.slice(startIndex, endIndex);
+
       function initProjects() {
-        projects.forEach((project, index) => {
+        // Clear existing projects
+        elements.projectsContainer.innerHTML = '';
+
+        const startIndex = (currentPage - 1) * projectsPerPage;
+        const endIndex = startIndex + projectsPerPage;
+        const projectsToShow = projects.slice(startIndex, endIndex);
+
+        projectsToShow.forEach((project, index) => {
           const projectCard = document.createElement('div');
           projectCard.className = 'project-card';
+          const globalIndex = startIndex + index;
+
           // Only show repo button if repo exists
-          const repoButton = project.repo ? 
+          const repoButton = project.repo ?
             `<a href="${project.repo}" target="_blank" class="repo-btn">
               <i class="fab fa-github"></i> Github
             </a>` : '';
+
           // Show demo button if demo exists
-          const demoButton = project.demo ? 
+          const demoButton = project.demo ?
             `<a href="${project.demo}" class="repo-btn demo-btn">
-              <i class="fas fa-play"></i> Demo
+              <i class="fas fa-play"></i> ${project.title === 'AI GitGenius' || project.title === 'AeroForecast Weather Application' || project.title === 'GitGenius - AI-Powered Test Case Generator' ? 'Live' : 'Demo'}
             </a>` : '';
+
           projectCard.innerHTML = `
             <h3 class="project-title">${project.title}</h3>
             <div class="project-icon">
-              <i class="${PROJECT_ICONS[index]}"></i>
+              <i class="${PROJECT_ICONS[globalIndex]}"></i>
             </div>
             <div class="project-content">
               <p class="project-desc">${project.description[0].split('.')[0]}.</p>
@@ -198,13 +268,72 @@
               <div class="project-buttons">
                 ${demoButton}
                 ${repoButton}
-                <button class="expand-btn" data-project="${index}">
+                <button class="expand-btn" data-project="${globalIndex}">
                   <i class="fas fa-expand"></i> Details
                 </button>
               </div>
             </div>
           `;
           elements.projectsContainer.appendChild(projectCard);
+        });
+
+        // Update pagination controls
+        updatePaginationControls();
+
+        // Re-apply animations to new cards
+        animateProjectCards();
+      }
+
+      function updatePaginationControls() {
+        const paginationContainer = document.getElementById('paginationControls');
+        if (!paginationContainer) return;
+
+        const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+        paginationContainer.innerHTML = `
+          <button class="pagination-btn prev-btn" ${currentPage === 1 ? 'disabled' : ''} data-action="prev">
+            <i class="fas fa-angle-left"></i>
+          </button>
+          <button class="pagination-btn next-btn" ${currentPage === totalPages ? 'disabled' : ''} data-action="next">
+            <i class="fas fa-angle-right"></i>
+          </button>
+        `;
+      }
+
+      function changePage(newPage) {
+        const totalPages = Math.ceil(projects.length / projectsPerPage);
+        if (newPage < 1 || newPage > totalPages) return;
+
+        currentPage = newPage;
+        initProjects();
+      }
+
+      function nextPage() {
+        const totalPages = Math.ceil(projects.length / projectsPerPage);
+        if (currentPage < totalPages) {
+          changePage(currentPage + 1);
+        }
+      }
+
+      function prevPage() {
+        if (currentPage > 1) {
+          changePage(currentPage - 1);
+        }
+      }
+
+      // Add pagination event delegation
+      function setupPaginationEvents() {
+        document.addEventListener('click', (e) => {
+          if (e.target.closest('.pagination-btn')) {
+            const btn = e.target.closest('.pagination-btn');
+            const action = btn.getAttribute('data-action');
+
+            if (action === 'next') {
+              nextPage();
+            } else if (action === 'prev') {
+              prevPage();
+            }
+          }
         });
       }
 
@@ -217,7 +346,6 @@
         let hoverTimeout;
         let playTimeout;
 
-        
         // Play video on hover with slight delay
         const profileCircle = document.querySelector('.profile-circle');
         profileCircle.addEventListener('mouseenter', () => {
@@ -516,10 +644,86 @@
           description: 'Machine learning algorithm for classification. I use it for binary prediction tasks.',
           skillLevel: 3,
           usage: 'Used in Pass Predictor for student performance prediction'
+        },
+        'Git': {
+          icon: 'fab fa-git-alt',
+          description: 'Version control system for tracking code changes. I use it for collaborative development and project management.',
+          skillLevel: 5,
+          usage: 'Used in all projects for version control and collaboration'
+        },
+        'Groq API': {
+          icon: 'fas fa-brain',
+          description: 'Groq API for fast AI-powered applications. I use it for natural language processing and code analysis.',
+          skillLevel: 4,
+          usage: 'Used in AI GitGenius for intelligent code analysis'
+        },
+        'AI Integration': {
+          icon: 'fas fa-brain',
+          description: 'AI integration and API management with practical experience in connecting AI services to web applications.',
+          skillLevel: 3,
+          usage: 'Used in GitGenius for AI-powered test case generation'
+        },
+        'Flask': {
+          icon: 'fas fa-flask',
+          description: 'Lightweight Python web framework for building scalable web applications. I use it for backend APIs and full-stack web development.',
+          skillLevel: 5,
+          usage: 'Used in GitGenius and College ERP for backend development'
+        },
+        'SQLAlchemy': {
+          icon: 'fas fa-database',
+          description: 'Python SQL toolkit and ORM for database operations. I use it for complex database interactions and migrations.',
+          skillLevel: 4,
+          usage: 'Used in GitGenius for database management and ORM'
+        },
+        'Auth0': {
+          icon: 'fas fa-shield-alt',
+          description: 'Modern authentication and authorization platform. I use it for secure user authentication and session management.',
+          skillLevel: 4,
+          usage: 'Used in GitGenius for secure user authentication'
+        },
+        'Bootstrap': {
+          icon: 'fab fa-bootstrap',
+          description: 'CSS framework for responsive web design. I use it for creating modern, mobile-friendly user interfaces.',
+          skillLevel: 4,
+          usage: 'Used in GitGenius for responsive frontend design'
+        },
+        'TypeScript': {
+          icon: 'fab fa-js-square',
+          description: 'Type-safe JavaScript for better development experience. I use it for both frontend and backend development.',
+          skillLevel: 2,
+          usage: 'Used in Weather App and AI GitGenius'
+        },
+        'Vite': {
+          icon: 'fas fa-rocket',
+          description: 'Fast build tool and development server. I use it for rapid development and optimized production builds.',
+          skillLevel: 3,
+          usage: 'Used in AeroForecast Weather Application'
+        },
+        'Tailwind CSS': {
+          icon: 'fab fa-css3-alt',
+          description: 'Utility-first CSS framework for rapid UI development. I use it for creating responsive and modern designs.',
+          skillLevel: 3,
+          usage: 'Used in AeroForecast Weather Application'
+        },
+        'Express.js': {
+          icon: 'fas fa-server',
+          description: 'Web application framework for Node.js. I use it for building robust backend APIs and services.',
+          skillLevel: 2,
+          usage: 'Used in Weather App backend'
+        },
+        'PostgreSQL': {
+          icon: 'fas fa-database',
+          description: 'Advanced relational database with powerful features. I use it for complex data storage and querying.',
+          skillLevel: 3,
+          usage: 'Used in AeroForecast Weather Application'
+        },
+        'FastAPI': {
+          icon: 'fas fa-rocket',
+          description: 'Modern Python web framework for building APIs. I use it for high-performance backend services.',
+          skillLevel: 3,
+          usage: 'Used in AI GitGenius for API development'
         }
       };
-
-      // Skill analysis data for home section skills
       const skillAnalysisData = {
         'HTML/CSS/JS': {
           icon: 'fas fa-code',
@@ -892,6 +1096,7 @@
       setupProjectModals();
       setupTagTooltips();
       setupSkillAnalysis();
+      setupPaginationEvents();
       animateProjectCards();
 
       // Highlight Analysis Data

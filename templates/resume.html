@@ -53,9 +53,13 @@
 
     .resume-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
     }
 
     .resume-card {
@@ -67,6 +71,11 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(25px);
       position: relative;
+      aspect-ratio: 1/1.3;
+      max-width: 320px;
+      justify-self: center;
+      cursor: pointer;
+      min-height: 400px;
     }
 
     .resume-card::before {
@@ -173,20 +182,13 @@
       transform: translateY(-1px);
     }
 
-    .download-section {
-      text-align: center;
-      margin-top: 0.5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .download-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.3rem;
-      font-size: 0.8rem;
+    .skills-preview-btn {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--resume-accent);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -194,12 +196,149 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
+      margin-top: 0.5rem;
+      backdrop-filter: blur(10px);
     }
 
-    .download-btn:hover {
-      background: var(--primary-dark);
+    .skills-preview-btn:hover {
+      background: var(--primary);
+      color: white;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .skills-preview-btn i {
+      font-size: 0.7rem;
+    }
+
+    /* Skills Modal */
+    .skills-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .skills-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .skills-modal-content {
+      background: linear-gradient(135deg,
+        rgba(15, 23, 42, 0.95) 0%,
+        rgba(30, 41, 59, 0.9) 50%,
+        rgba(15, 23, 42, 0.95) 100%);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(59, 130, 246, 0.2);
+      transform: translateY(20px) scale(0.9);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      backdrop-filter: blur(20px);
+    }
+
+    .skills-modal.active .skills-modal-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .skills-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      font-size: 1rem;
+    }
+
+    .skills-modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .skills-modal-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .skills-modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+
+    .skills-modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .skill-item-modal {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--resume-accent);
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .skill-item-modal:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .skill-icon {
+      font-size: 1.2rem;
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .skill-item-modal:hover .skill-icon {
+      color: var(--light);
+      transform: scale(1.1);
     }
 
     .featured-badge {
@@ -242,68 +381,174 @@
       border: 1px solid rgba(245, 158, 11, 0.3);
     }
 
+    .download-btn {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-shadow:
+        0 4px 15px rgba(59, 130, 246, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .download-btn:hover::before {
+      left: 100%;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 1) 0%, rgba(30, 64, 175, 1) 100%);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow:
+        0 8px 25px rgba(59, 130, 246, 0.4),
+        0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .download-btn:active {
+      transform: translateY(0) scale(1.02);
+      box-shadow:
+        0 4px 15px rgba(59, 130, 246, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .download-btn i {
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .download-btn:hover i {
+      transform: translateX(2px) scale(1.1);
+      animation: download-bounce 0.6s ease;
+    }
+
+    @keyframes download-bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(0) scale(1);
+      }
+      40% {
+        transform: translateX(-2px) scale(1.1);
+      }
+      60% {
+        transform: translateX(2px) scale(1.1);
+      }
+    }
+
     @media (max-width: 768px) {
       .resume-grid {
         grid-template-columns: 1fr;
-        gap: 0.8rem;
-        margin-bottom: 1rem;
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+        max-width: 380px;
       }
 
       .resume-card {
         margin: 0 auto;
-        max-width: 280px;
+        max-width: 350px;
+        aspect-ratio: 1/1.25;
+        min-height: 420px;
       }
 
       .resume-header-card {
-        padding: 0.8rem;
+        padding: 1rem;
       }
 
       .resume-content {
-        padding: 0.8rem;
+        padding: 1rem;
       }
 
       .resume-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.8rem;
+        margin-bottom: 0.4rem;
       }
 
       .resume-card-title {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
 
       .resume-card-subtitle {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
       }
 
       .resume-description {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+      }
+
+      .skills-preview-btn {
+        padding: 0.4rem 0.8rem;
         font-size: 0.75rem;
-        margin-bottom: 0.8rem;
+        margin-top: 0.5rem;
       }
 
-      .skills-list {
+      .skills-preview-btn i {
+        font-size: 0.7rem;
+      }
+
+      /* Skills Modal Mobile */
+      .skills-modal-content {
+        padding: 1.5rem;
+        max-width: 90%;
+        margin: 1rem;
+      }
+
+      .skills-modal-title {
+        font-size: 1.3rem;
+      }
+
+      .skills-modal-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-        gap: 0.3rem;
-        margin-bottom: 0.8rem;
+        gap: 0.6rem;
       }
 
-      .skill-item {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.65rem;
-        border-radius: 0.15rem;
+      .skill-item-modal {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+      }
+
+      .skill-icon {
+        font-size: 1rem;
       }
 
       .download-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.75rem;
-      }
-
-      .download-btn i {
+        padding: 0.5rem 1rem;
         font-size: 0.8rem;
       }
 
+      .download-btn i {
+        font-size: 0.85rem;
+      }
+
       .status-indicator {
-        font-size: 0.65rem;
-        padding: 0.15rem 0.4rem;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
       }
 
       .resume-title {
@@ -342,19 +587,14 @@
             including modern frameworks, responsive design, and web technologies.
           </p>
 
-          <h3>Key Skills</h3>
-          <div class="skills-list">
-            <div class="skill-item">HTML/CSS</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">React</div>
-            <div class="skill-item">Node.js</div>
-            <div class="skill-item">Flask</div>
-            <div class="skill-item">Django</div>
-            <div class="skill-item">MongoDB</div>
-            <div class="skill-item">MySQL</div>
+          <div class="skills-preview-section">
+            <button class="skills-preview-btn" onclick="showSkillsModal(1)">
+              <i class="fas fa-code"></i>
+              View Skills
+            </button>
           </div>
 
-          <div class="download-section">
+          <div class="download-section" style="margin-top: 1rem;">
             <a href="{{ url_for('static', filename='data/Resume(Full Stack Web Developer).pdf') }}" class="download-btn" download>
               <i class="fas fa-download"></i>
               Download PDF
@@ -381,19 +621,14 @@
             system design, algorithms, data structures, and development methodologies.
           </p>
 
-          <h3>Key Skills</h3>
-          <div class="skills-list">
-            <div class="skill-item">Python</div>
-            <div class="skill-item">C/C++</div>
-            <div class="skill-item">Java</div>
-            <div class="skill-item">System Design</div>
-            <div class="skill-item">Algorithms</div>
-            <div class="skill-item">Data Structures</div>
-            <div class="skill-item">Git</div>
-            <div class="skill-item">Linux</div>
+          <div class="skills-preview-section">
+            <button class="skills-preview-btn" onclick="showSkillsModal(2)">
+              <i class="fas fa-laptop-code"></i>
+              View Skills
+            </button>
           </div>
 
-          <div class="download-section">
+          <div class="download-section" style="margin-top: 1rem;">
             <a href="{{ url_for('static', filename='data/Resume(Software_Developer).pdf') }}" class="download-btn" download>
               <i class="fas fa-download"></i>
               Download PDF
@@ -401,9 +636,167 @@
           </div>
         </div>
       </div>
+
+      <div class="resume-card featured">
+        <div class="resume-header-card">
+          <div class="resume-icon">
+            <i class="fab fa-python"></i>
+          </div>
+          <h2 class="resume-card-title">Python Developer Resume</h2>
+          <p class="resume-card-subtitle">Backend Development & Data Science</p>
+          <div class="status-indicator status-available">
+            <i class="fas fa-check-circle"></i>
+            Available for Download
+          </div>
+        </div>
+        <div class="resume-content">
+          <p class="resume-description">
+            Specialized resume focusing on Python development expertise, including
+            backend frameworks, data analysis, automation, and machine learning projects.
+          </p>
+
+          <div class="skills-preview-section">
+            <button class="skills-preview-btn" onclick="showSkillsModal(3)">
+              <i class="fab fa-python"></i>
+              View Skills
+            </button>
+          </div>
+
+          <div class="download-section" style="margin-top: 1rem;">
+            <a href="{{ url_for('static', filename='data/Resume(Python_Developer).pdf') }}" class="download-btn" download>
+              <i class="fas fa-download"></i>
+              Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <!-- Skills Modal -->
+    <div id="skillsModal" class="skills-modal">
+      <div class="skills-modal-content">
+        <button class="skills-modal-close" onclick="closeSkillsModal()">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="skills-modal-header">
+          <h2 id="skillsModalTitle" class="skills-modal-title">Key Skills</h2>
+          <p id="skillsModalSubtitle" class="skills-modal-subtitle">Technologies & Tools</p>
+        </div>
+        <div id="skillsModalGrid" class="skills-grid">
+          <!-- Skills will be populated here -->
+        </div>
+      </div>
+    </div>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    // Resume skills data
+    const resumeSkills = {
+      1: {
+        title: "Web Developer Skills",
+        subtitle: "Frontend & Backend Technologies",
+        skills: [
+          { name: "HTML/CSS", icon: "fab fa-html5" },
+          { name: "JavaScript", icon: "fab fa-js-square" },
+          { name: "React", icon: "fab fa-react" },
+          { name: "Node.js", icon: "fab fa-node-js" },
+          { name: "Flask", icon: "fas fa-flask" },
+          { name: "Django", icon: "fas fa-code" },
+          { name: "MongoDB", icon: "fas fa-database" },
+          { name: "MySQL", icon: "fas fa-database" }
+        ]
+      },
+      2: {
+        title: "Software Developer Skills",
+        subtitle: "Engineering & System Design",
+        skills: [
+          { name: "Python", icon: "fab fa-python" },
+          { name: "C/C++", icon: "fas fa-code" },
+          { name: "Java", icon: "fab fa-java" },
+          { name: "System Design", icon: "fas fa-project-diagram" },
+          { name: "Algorithms", icon: "fas fa-chart-line" },
+          { name: "Data Structures", icon: "fas fa-sitemap" },
+          { name: "Git", icon: "fab fa-git-alt" },
+          { name: "Linux", icon: "fab fa-linux" }
+        ]
+      },
+      3: {
+        title: "Python Developer Skills",
+        subtitle: "Backend & Data Science",
+        skills: [
+          { name: "Python", icon: "fab fa-python" },
+          { name: "Django", icon: "fas fa-code" },
+          { name: "Flask", icon: "fas fa-flask" },
+          { name: "FastAPI", icon: "fas fa-rocket" },
+          { name: "Pandas", icon: "fas fa-table" },
+          { name: "NumPy", icon: "fas fa-calculator" },
+          { name: "ML", icon: "fas fa-brain" },
+          { name: "Data Science", icon: "fas fa-chart-bar" }
+        ]
+      }
+    };
+
+    function showSkillsModal(resumeId) {
+      const resume = resumeSkills[resumeId];
+      if (!resume) return;
+
+      // Populate modal content
+      document.getElementById('skillsModalTitle').textContent = resume.title;
+      document.getElementById('skillsModalSubtitle').textContent = resume.subtitle;
+
+      // Populate skills grid
+      const skillsGrid = document.getElementById('skillsModalGrid');
+      skillsGrid.innerHTML = '';
+      resume.skills.forEach(skill => {
+        const skillElement = document.createElement('div');
+        skillElement.className = 'skill-item-modal';
+        skillElement.innerHTML = `
+          <i class="skill-icon ${skill.icon}"></i>
+          <span>${skill.name}</span>
+        `;
+        skillsGrid.appendChild(skillElement);
+      });
+
+      // Show modal
+      const modal = document.getElementById('skillsModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSkillsModal() {
+      const modal = document.getElementById('skillsModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('skillsModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeSkillsModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeSkillsModal();
+      }
+    });
+
+    // Enhanced hover effects for resume cards
+    document.addEventListener('DOMContentLoaded', function() {
+      const resumeCards = document.querySelectorAll('.resume-card');
+
+      resumeCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    });
+  </script>
 </body>
 </html>
