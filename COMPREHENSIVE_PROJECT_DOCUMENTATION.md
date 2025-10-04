@@ -1,13 +1,13 @@
 # GitGenius - AI-Powered Test Case Generator
 
-## 🚀 Project Overview
+##  Project Overview
 
 **GitGenius** is an intelligent web application that revolutionizes software testing by automatically generating comprehensive, production-ready test cases for GitHub repositories using advanced AI technology. The application seamlessly integrates with GitHub OAuth for secure repository access and leverages Groq's powerful language models to create intelligent test cases across multiple programming languages and frameworks.
 
-### 🎯 Mission Statement
+###  Mission Statement
 To empower developers with AI-driven test case generation, improving code quality, reducing manual testing efforts, and accelerating software development cycles through intelligent automation.
 
-### 📊 Project Statistics
+###  Project Statistics
 - **Language**: Python 3.11+
 - **Framework**: Flask 3.1.1
 - **Database**: SQLAlchemy with SQLite/PostgreSQL support
@@ -18,9 +18,9 @@ To empower developers with AI-driven test case generation, improving code qualit
 
 ---
 
-## ✨ Key Features & Capabilities
+## Key Features & Capabilities
 
-### 🔐 Core Functionality
+### Core Functionality
 - **GitHub OAuth Integration**: Secure authentication with GitHub for seamless repository access
 - **AI-Powered Test Generation**: Advanced language models generate comprehensive test cases
 - **Multi-Language Support**: Supports Python, JavaScript, Java, C++, and other popular languages
@@ -29,7 +29,7 @@ To empower developers with AI-driven test case generation, improving code qualit
 - **Batch Processing**: Generate test cases for multiple files simultaneously
 - **Test Case Persistence**: Complete database integration with version control
 
-### 📈 Advanced Features
+### Advanced Features
 - **Real-time Analytics Dashboard**: Track test generation metrics and repository insights
 - **Code Quality Assessment**: AI-powered code quality scoring and improvement suggestions
 - **Export Functionality**: Multiple format support (Python unittest, pytest, Jest, etc.)
@@ -37,7 +37,7 @@ To empower developers with AI-driven test case generation, improving code qualit
 - **User Management**: Complete authentication and session management
 - **API Rate Limiting**: Built-in protection against GitHub API limits
 
-### 🛠️ Developer Experience
+### Developer Experience
 - **Responsive Web Interface**: Modern, mobile-friendly UI built with Bootstrap
 - **Interactive File Browser**: Visual repository structure navigation
 - **Real-time Progress Tracking**: Live updates during test generation
@@ -46,9 +46,9 @@ To empower developers with AI-driven test case generation, improving code qualit
 
 ---
 
-## 🏗️ Architecture & Design
+## Architecture & Design
 
-### 📐 System Architecture
+### System Architecture
 
 GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a service-oriented design pattern:
 
@@ -65,7 +65,7 @@ GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a 
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### 🔄 Application Flow
+###  Application Flow
 1. **Authentication Layer**: Users authenticate via GitHub OAuth 2.0
 2. **Repository Access**: Application fetches user repositories through GitHub API
 3. **Code Analysis**: Selected repository files are analyzed for structure and patterns
@@ -73,7 +73,7 @@ GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a 
 5. **Data Persistence**: Generated test cases are stored in SQLAlchemy database
 6. **User Interface**: Results are presented through responsive web interface
 
-### 🗂️ Component Architecture
+###  Component Architecture
 
 #### Backend Components
 - **Flask Application**: Main web framework handling HTTP requests and responses
@@ -90,9 +90,9 @@ GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a 
 
 ---
 
-## 💻 Technology Stack
+##  Technology Stack
 
-### 🐍 Backend Technologies
+###  Backend Technologies
 - **Python 3.11+**: Core programming language
 - **Flask 3.1.1**: Lightweight web application framework
 - **SQLAlchemy 2.0.42**: Database ORM and query builder
@@ -100,17 +100,17 @@ GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a 
 - **Flask-Login 0.6.3**: User session and authentication management
 - **Werkzeug 3.1.3**: WSGI utility library for request/response handling
 
-### 🤖 External APIs & Services
+###  External APIs & Services
 - **GitHub API v3**: Repository access, user authentication, and data retrieval
 - **Groq API**: AI-powered test case generation using Llama3-8B model
 - **OAuth 2.0**: Secure authentication protocol with PKCE support
 
-### 🗄️ Database Layer
+###  Database Layer
 - **SQLite**: Default development database (file-based, zero-configuration)
 - **PostgreSQL**: Production database support (recommended for scalability)
 - **Database Migrations**: Automatic schema management and updates
 
-### 🎨 Frontend Technologies
+###  Frontend Technologies
 - **HTML5**: Semantic markup and accessibility features
 - **CSS3**: Modern styling with Flexbox and Grid layouts
 - **JavaScript (ES6+)**: Interactive functionality and async operations
@@ -125,9 +125,9 @@ GitGenius follows a modular **MVC (Model-View-Controller)** architecture with a 
 
 ---
 
-## 🗄️ Database Schema & Models
+##  Database Schema & Models
 
-### 👤 User Model
+###  User Model
 ```sql
 users (
     id INTEGER PRIMARY KEY,
@@ -160,7 +160,7 @@ repositories (
 )
 ```
 
-### 🧪 TestCase Model
+###  TestCase Model
 ```sql
 test_cases (
     id INTEGER PRIMARY KEY,
@@ -176,7 +176,7 @@ test_cases (
 )
 ```
 
-### 📊 Analytics Model
+###  Analytics Model
 ```sql
 analytics (
     id INTEGER PRIMARY KEY,
@@ -192,7 +192,7 @@ analytics (
 )
 ```
 
-### 🔍 CodeAnalysis Model
+###  CodeAnalysis Model
 ```sql
 code_analysis (
     id INTEGER PRIMARY KEY,
@@ -208,21 +208,21 @@ code_analysis (
 
 ---
 
-## 🔐 Security Architecture
+##  Security Architecture
 
-### 🔒 Authentication & Authorization
+###  Authentication & Authorization
 - **OAuth 2.0 Integration**: Secure GitHub OAuth flow with state validation
 - **Session Management**: Flask-Login for secure user sessions
 - **Token Security**: Encrypted storage of GitHub access tokens
 - **CSRF Protection**: Built-in CSRF protection for form submissions
 
-### 🛡️ API Security
+###  API Security
 - **Rate Limiting**: GitHub API rate limit handling and user notifications
 - **Input Validation**: Comprehensive input sanitization and validation
 - **Error Handling**: Secure error messages without information leakage
 - **HTTPS Enforcement**: SSL/TLS encryption for all communications
 
-### 🔑 Access Control
+###  Access Control
 - **Repository Scoping**: Users can only access their own repositories
 - **Data Isolation**: Complete data segregation between users
 - **Audit Logging**: Comprehensive logging of all user actions
@@ -230,21 +230,21 @@ code_analysis (
 
 ---
 
-## ⚡ Performance & Scalability
+##  Performance & Scalability
 
-### 🚀 Performance Optimizations
+###  Performance Optimizations
 - **Repository Caching**: Intelligent caching reduces GitHub API calls
 - **Database Indexing**: Optimized queries with proper indexing
 - **Connection Pooling**: Efficient database connection management
 - **Async Processing**: Background task processing for heavy operations
 
-### 📈 Scalability Features
+###  Scalability Features
 - **Horizontal Scaling**: Support for multiple application instances
 - **Database Scaling**: PostgreSQL support for high-load scenarios
 - **Load Balancing**: Gunicorn configuration for production deployment
 - **Containerization**: Docker support for consistent deployments
 
-### 🔧 Monitoring & Analytics
+###  Monitoring & Analytics
 - **Performance Metrics**: Built-in analytics for system performance
 - **Error Tracking**: Comprehensive error logging and reporting
 - **Usage Analytics**: User behavior and system usage tracking
@@ -252,15 +252,15 @@ code_analysis (
 
 ---
 
-## 🛠️ Installation & Setup
+##  Installation & Setup
 
-### 📋 Prerequisites
+###  Prerequisites
 - **Python**: Version 3.11 or higher
 - **Git**: For repository cloning and version control
 - **GitHub Account**: For OAuth authentication and repository access
 - **Groq API Account**: For AI-powered test case generation
 
-### 🔑 API Configuration
+###  API Configuration
 1. **GitHub OAuth Setup**:
    - Navigate to GitHub Settings > Developer settings > OAuth Apps
    - Create new OAuth App with callback URL: `http://localhost:5000/auth/github/callback`
@@ -271,7 +271,7 @@ code_analysis (
    - Create account and generate API key
    - Note the API key for configuration
 
-### 🚀 Installation Steps
+###  Installation Steps
 
 #### Step 1: Clone Repository
 ```bash
@@ -323,15 +323,15 @@ python main.py
 
 ---
 
-## 🎯 Usage Guide
+##  Usage Guide
 
-### 🔐 Authentication Process
+###  Authentication Process
 1. **Access Application**: Navigate to `http://localhost:5000`
 2. **GitHub Login**: Click "Login with GitHub" button
 3. **Authorization**: Grant repository access permissions
 4. **Dashboard**: Redirected to personal dashboard
 
-### 🧪 Test Case Generation Workflow
+###  Test Case Generation Workflow
 
 #### Step 1: Repository Selection
 - Browse available repositories from GitHub
@@ -358,7 +358,7 @@ python main.py
 - Make necessary modifications
 - Export in desired format (unittest, pytest, etc.)
 
-### 📊 Dashboard Features
+###  Dashboard Features
 - **Repository Overview**: View all accessible repositories
 - **Test History**: Track previously generated test cases
 - **Analytics**: View usage statistics and metrics
@@ -366,9 +366,9 @@ python main.py
 
 ---
 
-## 🔌 API Documentation
+##  API Documentation
 
-### 🔐 Authentication Endpoints
+###  Authentication Endpoints
 ```http
 GET  /                    # Home page and login interface
 GET  /auth/github         # Initiate GitHub OAuth flow
@@ -376,7 +376,7 @@ GET  /auth/github/callback # Handle OAuth callback
 POST /logout              # User logout and session cleanup
 ```
 
-### 📁 Repository Endpoints
+###  Repository Endpoints
 ```http
 GET  /dashboard           # Main user dashboard
 GET  /repositories        # List user repositories
@@ -384,7 +384,7 @@ GET  /repository/<id>     # Repository details and file browser
 POST /repository/<id>/cache # Update repository cache
 ```
 
-### 🧪 Test Generation Endpoints
+###  Test Generation Endpoints
 ```http
 POST /generate-tests      # Generate test cases for selected files
 GET  /test-cases          # List generated test cases
@@ -393,21 +393,21 @@ PUT  /test-cases/<id>     # Update test case
 DELETE /test-cases/<id>   # Delete test case
 ```
 
-### 📊 Analytics Endpoints
+###  Analytics Endpoints
 ```http
 GET  /analytics           # User analytics and statistics
 GET  /analytics/export    # Export analytics data
 POST /analytics/update    # Update analytics data
 ```
 
-### 🔍 Code Analysis Endpoints
+###  Code Analysis Endpoints
 ```http
 POST /analyze-code        # Analyze code quality
 GET  /analysis/<id>       # View analysis results
 POST /analysis/batch      # Batch analysis processing
 ```
 
-### 📄 Response Format
+###  Response Format
 ```json
 {
   "status": "success|error",
@@ -424,9 +424,9 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 🐛 Troubleshooting Guide
+##  Troubleshooting Guide
 
-### 🔐 Authentication Issues
+###  Authentication Issues
 **Problem**: GitHub OAuth fails to authenticate
 **Solutions**:
 - Verify GitHub OAuth app configuration
@@ -434,7 +434,7 @@ POST /analysis/batch      # Batch analysis processing
 - Ensure GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET are correct
 - Clear browser cache and cookies
 
-### 🌐 API Rate Limiting
+###  API Rate Limiting
 **Problem**: GitHub API rate limit exceeded
 **Solutions**:
 - Implement request caching (already built-in)
@@ -442,7 +442,7 @@ POST /analysis/batch      # Batch analysis processing
 - Consider upgrading GitHub plan for higher limits
 - Add retry logic with exponential backoff
 
-### 🗄️ Database Connection Issues
+###  Database Connection Issues
 **Problem**: Database connection fails
 **Solutions**:
 - Check DATABASE_URL configuration
@@ -450,7 +450,7 @@ POST /analysis/batch      # Batch analysis processing
 - Verify SQLite file location and write permissions
 - Check PostgreSQL connection string format
 
-### 🤖 AI Service Problems
+###  AI Service Problems
 **Problem**: Groq API requests fail
 **Solutions**:
 - Verify GROQ_API_KEY is correctly set
@@ -458,7 +458,7 @@ POST /analysis/batch      # Batch analysis processing
 - Monitor API usage and quotas
 - Ensure stable internet connection
 
-### 🚀 Performance Issues
+###  Performance Issues
 **Problem**: Slow test case generation
 **Solutions**:
 - Enable repository caching
@@ -468,23 +468,23 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
-### 🚀 Planned Features
+###  Planned Features
 - **Multi-tenant Support**: Support for team-based repository access
 - **CI/CD Integration**: Native integration with popular CI/CD platforms
 - **Advanced Analytics**: Machine learning-powered insights and recommendations
 - **Plugin System**: Extensible architecture for custom test generators
 - **Mobile Application**: Native mobile apps for iOS and Android
 
-### 🛠️ Technical Improvements
+###  Technical Improvements
 - **Microservices Architecture**: Break down into smaller, focused services
 - **GraphQL API**: Modern API with flexible querying capabilities
 - **Real-time Collaboration**: Live collaborative test case editing
 - **Advanced Caching**: Redis integration for improved performance
 - **Container Orchestration**: Kubernetes deployment support
 
-### 🔬 Research & Development
+###  Research & Development
 - **Custom AI Models**: Fine-tuned models for specific domains
 - **Code Generation**: AI-powered code completion and suggestions
 - **Security Testing**: Automated security vulnerability detection
@@ -493,22 +493,22 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 📚 Additional Resources
+##  Additional Resources
 
-### 📖 Documentation
+###  Documentation
 - [Flask Documentation](https://flask.palletsprojects.com/)
 - [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
 - [GitHub API Documentation](https://docs.github.com/en/rest)
 - [Groq API Documentation](https://console.groq.com/docs)
 
-### 🛠️ Development Tools
+###  Development Tools
 - **IDE Support**: VS Code, PyCharm, Vim, Emacs
 - **Testing**: pytest, unittest, coverage.py
 - **Linting**: flake8, black, isort
 - **Profiling**: cProfile, line_profiler
 - **Monitoring**: Sentry, New Relic, DataDog
 
-### 📚 Learning Resources
+###  Learning Resources
 - **Python Web Development**: Flask tutorials and best practices
 - **RESTful API Design**: API design principles and patterns
 - **Database Design**: SQLAlchemy and database optimization
@@ -517,16 +517,16 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
-### 🚀 Development Setup
+###  Development Setup
 1. Fork the repository on GitHub
 2. Create feature branch: `git checkout -b feature-name`
 3. Set up development environment
 4. Make changes with comprehensive tests
 5. Submit pull request with detailed description
 
-### 📝 Code Standards
+###  Code Standards
 - **PEP 8**: Python code style guidelines
 - **Type Hints**: Comprehensive type annotations
 - **Documentation**: Docstrings for all functions and classes
@@ -542,16 +542,16 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 📄 License & Credits
+##  License & Credits
 
-### 📜 License
+###  License
 **MIT License** - Free for personal and commercial use
 
-### 👥 Creator & Contributors
+###  Creator & Contributors
 - **Rishab** (being-souL1230) - Project Creator and Lead Developer
 - **GitHub Repository**: [AI-GitGenius](https://github.com/being-souL1230/AI-GitGenius)
 
-### 🙏 Acknowledgments
+###  Acknowledgments
 - **GitHub** for OAuth and API services
 - **Groq** for AI-powered language models
 - **Flask Community** for excellent web framework
@@ -559,23 +559,23 @@ POST /analysis/batch      # Batch analysis processing
 
 ---
 
-## 🎯 Conclusion
+##  Conclusion
 
 GitGenius represents a significant advancement in AI-powered software testing, combining cutting-edge artificial intelligence with robust web application architecture. The project demonstrates how modern AI technologies can be leveraged to solve real-world development challenges, specifically in the domain of automated test case generation.
 
-### 💡 Key Achievements
+###  Key Achievements
 - **Innovation**: First-of-its-kind AI-powered test case generator
 - **User Experience**: Intuitive interface with powerful backend
 - **Scalability**: Production-ready architecture with growth potential
 - **Security**: Enterprise-grade security implementation
 - **Performance**: Optimized for both development and production use
 
-### 🌟 Impact
+###  Impact
 GitGenius has the potential to transform how developers approach testing, reducing manual effort while improving test coverage and code quality. By automating the tedious process of test case creation, developers can focus on core business logic and innovation.
 
-### 🚀 Vision
+###  Vision
 To become the industry standard for AI-powered test generation, continuously evolving with the latest AI technologies and developer needs, ultimately contributing to higher software quality and faster development cycles across the industry.
 
 ---
 
-**GitGenius** - Empowering developers with AI-driven test case generation for better code quality and reliability. 🚀✨
+**GitGenius** - Empowering developers with AI-driven test case generation for better code quality and reliability. 
