@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_file
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_file, abort
 import os
 import json
 import sys
 import subprocess
 import tempfile
 from datetime import datetime
+import markdown
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 import numpy as np
@@ -41,11 +42,81 @@ def generate_prediction_cache_key(data):
 # JSON file to store contact submissions
 CONTACT_FILE = 'contact_submissions.json'
 
+# Directory containing blog Markdown files
+BLOGS_DIR = os.path.join(app.root_path, 'Blogs')
+
 # Initialize contact file if it doesn't exist
 def init_contact_file():
     if not os.path.exists(CONTACT_FILE):
         with open(CONTACT_FILE, 'w', encoding='utf-8') as f:
             json.dump([], f, ensure_ascii=False, indent=2)
+
+
+def _list_markdown_posts():
+    posts = []
+
+    if not os.path.isdir(BLOGS_DIR):
+        return posts
+
+    for filename in os.listdir(BLOGS_DIR):
+        if not filename.lower().endswith('.md'):
+            continue
+
+        file_path = os.path.join(BLOGS_DIR, filename)
+        if not os.path.isfile(file_path):
+            continue
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as handle:
+                lines = handle.readlines()
+        except Exception as exc:
+            print(f"Skipping markdown blog {filename}: {exc}")
+            continue
+
+        title = None
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith('#'):
+                title = stripped.lstrip('#').strip()
+                break
+
+        if not title:
+            title = os.path.splitext(filename)[0].replace('_', ' ').title()
+
+        posts.append({
+            'filename': filename,
+            'title': title
+        })
+
+    posts.sort(key=lambda item: item['title'].lower())
+    return posts
+
+
+def _resolve_blog_path(filename: str) -> str:
+    safe_path = os.path.normpath(os.path.join(BLOGS_DIR, filename))
+    base_path = os.path.abspath(BLOGS_DIR)
+    if not os.path.commonpath([base_path, safe_path]) == base_path:
+        raise ValueError("Invalid blog path")
+    if not os.path.isfile(safe_path):
+        raise FileNotFoundError(filename)
+    return safe_path
+
+
+def _render_markdown_file(filename: str):
+    path = _resolve_blog_path(filename)
+    with open(path, 'r', encoding='utf-8') as handle:
+        text = handle.read()
+
+    title = None
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith('#'):
+            title = stripped.lstrip('#').strip()
+            break
+
+    html = markdown.markdown(text, extensions=['fenced_code', 'codehilite', 'tables'])
+    return title or filename, html
+
 
 # Save contact submission to JSON
 def save_contact_submission(data):
@@ -139,6 +210,41 @@ def resume():
 @app.route("/certificates")
 def certificates():
     return render_template("certificates.html")
+
+
+@app.route("/blogs")
+def blogs():
+    posts = _list_markdown_posts()
+    return render_template("blog.html", posts=posts)
+
+
+@app.route("/api/blogs")
+def api_blogs():
+    posts = _list_markdown_posts()
+    return jsonify({
+        'success': True,
+        'posts': posts,
+        'count': len(posts)
+    })
+
+
+@app.route("/api/blogs/<path:filename>")
+def api_blog_content(filename):
+    try:
+        title, html = _render_markdown_file(filename)
+    except FileNotFoundError:
+        abort(404)
+    except ValueError:
+        abort(400)
+    except Exception as exc:
+        abort(500, description=str(exc))
+
+    return jsonify({
+        'success': True,
+        'title': title,
+        'html': html,
+        'filename': filename
+    })
 
 # Resume download routes
 @app.route("/download/resume/web-developer")

@@ -1,7 +1,7 @@
 class ThemeSwitcher {
   constructor() {
     this.themeToggle = document.getElementById('theme-toggle');
-    this.theme = localStorage.getItem('theme') || 'light';
+    this.theme = localStorage.getItem('theme') || 'red';
     this.isAnimating = false;
     this.init();
   }
@@ -12,48 +12,65 @@ class ThemeSwitcher {
   }
 
   setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+    // Remove any existing theme styles
+    const oldLink = document.getElementById('theme-style');
+    if (oldLink) {
+      oldLink.remove();
+    }
+
+    // Add the appropriate theme stylesheet
+    const link = document.createElement('link');
+    link.id = 'theme-style';
+    link.rel = 'stylesheet';
+    link.href = `/static/css/main${theme === 'blue' ? '_blue_theme' : ''}.css`;
+    document.head.appendChild(link);
+
+    // Save to localStorage
     localStorage.setItem('theme', theme);
+    
+    // Update toggle button state
     if (this.themeToggle) {
-      if (theme === 'dark') {
-        this.themeToggle.classList.add('dark');
-      } else {
-        this.themeToggle.classList.remove('dark');
-      }
+      this.themeToggle.setAttribute('data-theme', theme);
+      this.themeToggle.classList.toggle('blue-theme', theme === 'blue');
     }
   }
 
   toggleTheme() {
     if (this.isAnimating) return;
-
     this.isAnimating = true;
-    this.theme = this.theme === 'dark' ? 'light' : 'dark';
-
-    // Add a class to trigger the animation
+    
+    // Toggle between red and blue themes
+    this.theme = this.theme === 'red' ? 'blue' : 'red';
+    
+    // Add animation class
     if (this.themeToggle) {
       this.themeToggle.classList.add('animating');
     }
 
     this.setTheme(this.theme);
 
-    // Remove the animating class after the transition is complete
+    // Remove animation class after transition
     setTimeout(() => {
       if (this.themeToggle) {
         this.themeToggle.classList.remove('animating');
       }
       this.isAnimating = false;
-    }, 400); // Match the CSS transition duration
+    }, 400);
   }
 
   setupEventListeners() {
     if (this.themeToggle) {
-      this.themeToggle.addEventListener('click', () => this.toggleTheme());
+      this.themeToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggleTheme();
+      });
     } else {
       console.warn('Theme toggle button not found - theme switching disabled');
     }
   }
 }
 
+// Initialize theme switcher when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new ThemeSwitcher();
 });

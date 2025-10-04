@@ -13,8 +13,41 @@
         modalFeatures: document.getElementById('modalFeatures'),
         emailForm: document.getElementById('emailForm'),
         emailSubmitBtn: document.getElementById('emailSubmitBtn'),
-        emailMessage: document.getElementById('emailMessage')
+        emailMessage: document.getElementById('emailMessage'),
+        immersiveModel: document.querySelector('.model-showcase model-viewer')
       };
+
+      // Cycle through immersive model sources
+      const setupModelCarousel = () => {
+        const viewer = elements.immersiveModel;
+        if (!viewer) return;
+
+        const sources = (viewer.dataset.models || '')
+          .split('|')
+          .map(src => src.trim())
+          .filter(Boolean);
+
+        if (sources.length <= 1) return;
+
+        let index = 0;
+
+        // Preload other models to minimise swap flashes
+        sources.slice(1).forEach(src => {
+          const preload = document.createElement('link');
+          preload.rel = 'preload';
+          preload.as = 'fetch';
+          preload.href = src;
+          preload.crossOrigin = 'anonymous';
+          document.head.appendChild(preload);
+        });
+
+        setInterval(() => {
+          index = (index + 1) % sources.length;
+          viewer.src = sources[index];
+        }, 3000);
+      };
+
+      setupModelCarousel();
 
       // Projects Data with GitHub repo links
       const projectsPerPage = 6;
@@ -204,7 +237,7 @@
             "Weather alerts and severe condition indicators"
           ],
           repo: null, // No GitHub repo link
-          demo: "https://weather-app-2u2m.onrender.com"
+          demo: "https://weather-app-sigma-livid-45.vercel.app/"
         }
       ];
 
